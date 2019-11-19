@@ -45,17 +45,20 @@ class HealIndex(object):
 
 class Machine(object):
 
-    def __init__(self, name, ttf_min=500, ttf_max=50000, temperature_max=120, ambient_temperature=20,
-                 ambient_pressure=101, pressure_factor=2, telemetry_notifier=None, event_notifier=None, clock=None,
+    def __init__(self, name, ttf1_min=500, ttf1_max=50000, ttf2_min=500, ttf2_max=50000, temperature_max=120,
+                 ambient_temperature=20, ambient_pressure=101, pressure_factor=2, telemetry_notifier=None,
+                 event_notifier=None, clock=None,
                  speed_threshold=20, **kwargs):
         self.name = name
-        self.ttf_min = ttf_min
-        self.ttf_max = ttf_max
+        self.ttf1_min = ttf1_min
+        self.ttf1_max = ttf1_max
+        self.ttf2_min = ttf2_min
+        self.ttf2_max = ttf2_max
         self.telemetry_notifier = telemetry_notifier
         self.event_notifier = event_notifier
         self.clock = clock
-        self.h1 = HealIndex('F1', np.random.randint(self.ttf_min, self.ttf_max))
-        self.h2 = HealIndex('F2', np.random.randint(self.ttf_min, self.ttf_max))
+        self.h1 = HealIndex('F1', np.random.randint(self.ttf1_min, self.ttf1_max))
+        self.h2 = HealIndex('F2', np.random.randint(self.ttf2_min, self.ttf2_max))
         self.ambient_temperature = ambient_temperature
         self.ambient_pressure = ambient_pressure
         self.speed_threshold = speed_threshold
@@ -99,8 +102,8 @@ class Machine(object):
 
     def repair(self, seconds):
         self.maintenance = seconds
-        self.h1 = HealIndex('F1', np.random.randint(self.ttf_min, self.ttf_max))
-        self.h2 = HealIndex('F2', np.random.randint(self.ttf_min, self.ttf_max))
+        self.h1 = HealIndex('F1', np.random.randint(self.ttf1_min, self.ttf1_max))
+        self.h2 = HealIndex('F2', np.random.randint(self.ttf2_min, self.ttf2_max))
 
     def broken(self):
         return self.maintenance != 0
@@ -180,7 +183,7 @@ class Facility(object):
             speeds = np.random.randint(self.operational_speed_min, self.operational_speed_max, self.machines_per_batch)
             planning = [{'start': sta, 'stop': sto, 'speed': spd} for sta, sto, spd in zip(starts, stops, speeds)]
             self.planning = dict(zip(s, planning))
-            #print(self.planning)
+            # print(self.planning)
 
         for m in self.machines:
             if m in self.planning:
