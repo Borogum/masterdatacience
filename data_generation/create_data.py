@@ -36,8 +36,7 @@ if __name__ == '__main__':
 
     start_time = time.time()
     data_path = 'data'
-    duration = 1 * 30 * 24 * 60 * 60  # one month
-    #duration = 2 * 24 * 60 * 60  # one day
+    duration = 2 * 30 * 24 * 60 * 60  # two months
 
     cl = Clock()
 
@@ -64,7 +63,7 @@ if __name__ == '__main__':
          },
     ]
 
-    facilities = [create_facility(cfg) for cfg in facilities_configs]
+    facilities_list = [create_facility(cfg) for cfg in facilities_configs]
 
     completion_str = 'Progress: %.2f%%' % 0
     print(completion_str, end='')
@@ -75,10 +74,10 @@ if __name__ == '__main__':
         completion_str = 'Progress: %.2f%%' % (100. * i / duration)
         print(completion_str, end='')
 
-        for n, f in enumerate(facilities):
+        for n, f in enumerate(facilities_list):
             next(f)
         next(cl)
 
-    flush_all(facilities)
+    flush_all(facilities_list)
 
     print('\n--- %.2f seconds ---' % (time.time() - start_time))

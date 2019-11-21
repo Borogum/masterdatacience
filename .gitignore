@@ -1,7 +1,7 @@
 .*
-venv
 __pycache__
-!.gitignore
-data_generation/data/
-examples/*
+venv
+data/
+examples/
 !examples/*.zip
+!.gitignore
