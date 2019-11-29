@@ -33,9 +33,9 @@ if __name__ == '__main__':
     broker_port = 1883
     topic = 'test'
     mqtt.Client.connected_flag = False
-    client = mqtt.Client(client_id='test_plot', clean_session=True, protocol=mqtt.MQTTv31, transport='tcp')
-    client.on_connect = on_connect
-    client.on_message = on_message
+    mqtt_client = mqtt.Client(client_id='test_plot', clean_session=True, protocol=mqtt.MQTTv31, transport='tcp')
+    mqtt_client.on_connect = on_connect
+    mqtt_client.on_message = on_message
 
     # graph
     fig, ax = plt.subplots()
@@ -46,15 +46,15 @@ if __name__ == '__main__':
     ax.set_xlabel('Seconds ago')
 
     # Add user data
-    client.user_data_set({'line': line, 'y': y})
+    mqtt_client.user_data_set({'line': line, 'y': y})
 
-    client.loop_start()
+    mqtt_client.loop_start()
     print("Connecting to broker at %s:%d" % (broker_ip, broker_port))
-    client.connect(broker_ip, port=broker_port)
+    mqtt_client.connect(broker_ip, port=broker_port)
 
-    while not client.connected_flag:
+    while not mqtt_client.connected_flag:
         print("In wait loop")
         time.sleep(1)
 
-    client.subscribe(topic)
+    mqtt_client.subscribe(topic)
     plt.show()

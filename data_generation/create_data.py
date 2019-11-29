@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     start_time = time.time()
     data_path = 'data'
-    duration = 2 * 30 * 24 * 60 * 60  # two months
+    duration = 6 * 30 * 24 * 60 * 60  # 6 months
 
     cl = Clock()
 
@@ -64,20 +64,21 @@ if __name__ == '__main__':
     ]
 
     facilities_list = [create_facility(cfg) for cfg in facilities_configs]
-
-    completion_str = 'Progress: %.2f%%' % 0
+    completion_str = 'Generating data ... %.2f%%' % 0
     print(completion_str, end='')
 
     for i in range(duration):
 
         print('\b' * len(completion_str), end='')
-        completion_str = 'Progress: %.2f%%' % (100. * i / duration)
+        completion_str = 'Generating data ... %.2f%%' % (100. * i / duration)
         print(completion_str, end='')
 
         for n, f in enumerate(facilities_list):
             next(f)
         next(cl)
 
+    print('\nSaving files ... ', end='')
     flush_all(facilities_list)
+    print('Done!')
 
     print('\n--- %.2f seconds ---' % (time.time() - start_time))

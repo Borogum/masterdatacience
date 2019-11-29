@@ -43,6 +43,7 @@ def process(path, machine_id, gap=30, w=7, rolling_size=5):
 
     # Filter and select event data
     critical_df = event_df[event_df['severity'] == 'CRITICAL'][['time', 'code']]
+
     # Join data
     critical_df['time'] -= 1
     telemetry_event_df = telemetry_grouped_df.merge(critical_df, how='left', left_on='timestamp_end', right_on='time')
@@ -51,17 +52,18 @@ def process(path, machine_id, gap=30, w=7, rolling_size=5):
 
     telemetry_event_df = telemetry_event_df[list(telemetry_grouped_df.columns) + ['sequence_id', 'code']]
     grouped_by_sequence_id = telemetry_event_df.groupby('sequence_id')
+
     # Calculate RUL (Remaining Useful Life)
     telemetry_event_df['rul'] = grouped_by_sequence_id['cycle_id'].transform(lambda x: len(x) - x + x.min() - 1)
 
     # Failure label for all records
-
     telemetry_event_df['upcoming_failure'] = grouped_by_sequence_id['code'].transform(
         lambda x: [x.iloc[-1] if not pd.isnull(x.iloc[-1]) else ''] * len(x))
 
     # Future horizon failure
-    telemetry_event_df['immediate_failure'] = np.where(telemetry_event_df['rul'] < w,
-                                                       telemetry_event_df['upcoming_failure'], '')
+    telemetry_event_df['immediate_failure'] = np.where(
+        (telemetry_event_df['rul'] < w) & (telemetry_event_df['upcoming_failure'].str.len() > 0),
+        telemetry_event_df['upcoming_failure'].str.get(-1), '0')
 
     # Calculate rolling features
     for col in ['temperature_avg', 'temperature_max', 'pressure_avg', 'pressure_max']:
@@ -81,7 +83,7 @@ def process(path, machine_id, gap=30, w=7, rolling_size=5):
     return telemetry_event_df
 
 
-if __name__== '__main__':
+if __name__ == '__main__':
 
     input_base_path = os.path.join('..', 'data_generation', 'data', 'facility_a')
     output_base_path = os.path.join('data', 'facility_a')
@@ -92,4 +94,4 @@ if __name__== '__main__':
         machine_id = os.path.basename(f).split('_')[1]
         print('Processing machine: %s ...' % machine_id)
         df = process(input_base_path, machine_id)
-        df.to_csv(os.path.join(output_base_path, 'processed_%s.csv' % machine_id), index=False, sep=';', decimal='.')
+        df.to_csv(os.path.join(output_base_path, 'processed_%s.csv' % machine_id), index=False, sep=',', decimal='.')

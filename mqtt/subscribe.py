@@ -1,6 +1,5 @@
 import time
 import json
-import numpy as np
 import paho.mqtt.client as mqtt
 
 
@@ -26,24 +25,24 @@ if __name__ == '__main__':
     broker_port = 1883
     topic = 'test'
     mqtt.Client.connected_flag = False
-    client = mqtt.Client('test_subscribe', True, None, mqtt.MQTTv31)
-    client.on_connect = on_connect
-    client.on_message = on_message
-    client.on_subscribe = on_subscribe
+    mqtt_client = mqtt.Client('test_subscribe', True, None, mqtt.MQTTv31)
+    mqtt_client.on_connect = on_connect
+    mqtt_client.on_message = on_message
+    mqtt_client.on_subscribe = on_subscribe
 
-    client.loop_start()
+    mqtt_client.loop_start()
     print("Connecting to broker at %s:%d" % (broker_ip, broker_port))
-    client.connect(broker_ip, port=broker_port)
+    mqtt_client.connect(broker_ip, port=broker_port)
 
-    while not client.connected_flag:
+    while not mqtt_client.connected_flag:
         print("In wait loop")
         time.sleep(1)
 
-    client.subscribe(topic)
+    mqtt_client.subscribe(topic)
 
     while True:
         try:
             time.sleep(2)
         except KeyboardInterrupt:
-            client.loop_stop()
-            client.disconnect()
+            mqtt_client.loop_stop()
+            mqtt_client.disconnect()
