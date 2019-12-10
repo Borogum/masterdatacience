@@ -12,6 +12,9 @@ Units:
 
 import os
 import glob
+import shutil
+import argparse
+import configparser
 import numpy as np
 import pandas as pd
 
@@ -85,13 +88,40 @@ def process(path, machine_id, gap=30, w=7, rolling_size=5):
 
 if __name__ == '__main__':
 
-    input_base_path = os.path.join('..', 'data_generation', 'data', 'facility_a')
-    output_base_path = os.path.join('data', 'facility_a')
-    event_dir = os.path.join(input_base_path, 'event')
-    telemetry_dir = os.path.join(input_base_path, 'telemetry')
+    parser = argparse.ArgumentParser(description='Process company data')
+    parser.add_argument('config', type=str, help='Configuration file')
+    args = parser.parse_args()
+    config = configparser.ConfigParser()
+    config.read(args.config)
 
-    for f in glob.glob(os.path.join(telemetry_dir, 'telemetry_*.csv')):
-        machine_id = os.path.basename(f).split('_')[1]
-        print('Processing machine: %s ...' % machine_id)
-        df = process(input_base_path, machine_id)
-        df.to_csv(os.path.join(output_base_path, 'processed_%s.csv' % machine_id), index=False, sep=',', decimal='.')
+    config_gap = config.getint('CONFIGURATION', 'gap')
+    config_w = config.getint('CONFIGURATION', 'w')
+    config_rolling_size = config.getint('CONFIGURATION', 'rolling')
+    path_in = config.get('CONFIGURATION', 'path_in')
+    path_out = config.get('CONFIGURATION', 'path_out')
+
+    directories = []
+    for directory in glob.glob(os.path.join(path_in, '*', ''), recursive=False):
+        directories.append(os.path.basename(os.path.normpath(directory)))
+
+    for d in directories:
+
+        input_base_path = os.path.join(path_in, d)
+        output_base_path = os.path.join(path_out, d)
+
+        # Create dirs
+        if os.path.isdir(output_base_path):
+            shutil.rmtree(output_base_path)
+        os.makedirs(output_base_path)
+
+        event_dir = os.path.join(input_base_path, 'event')
+        telemetry_dir = os.path.join(input_base_path, 'telemetry')
+
+        print('From %s:' % d)
+        for f in glob.glob(os.path.join(telemetry_dir, 'telemetry_*.csv')):
+            id = os.path.basename(f).split('_')[1]
+            print('Processing machine: %s ... ' % id, end='')
+            df = process(input_base_path, id, gap=config_gap, w=config_w, rolling_size=config_rolling_size)
+            print('Done!')
+            df.to_csv(os.path.join(output_base_path, 'processed_%s.csv' % id), index=False, sep=',',
+                      decimal='.')
