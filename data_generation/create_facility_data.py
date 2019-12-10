@@ -1,10 +1,9 @@
 import os
-import shutil
-import configparser
-import argparse
-
 import uuid
 import time
+import shutil
+import argparse
+import configparser
 from data_generation.simulation import Clock, Facility, Machine
 from data_generation.notify import CsvNotifier
 

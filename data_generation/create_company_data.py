@@ -16,7 +16,7 @@ def enqueue_output(out, queue):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Generate company data')
-    parser.add_argument('path', type=str, help='Folder where configurations files live')
+    parser.add_argument('path', type=str, help='Folder where configuration files live')
     args = parser.parse_args()
 
     q = Queue()

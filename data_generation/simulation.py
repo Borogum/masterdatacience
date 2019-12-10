@@ -174,13 +174,14 @@ class Facility(object):
 
         if self.t % self.batch_time == 0:
             s = [self.machines[i] for i in sorted(np.random.choice(range(len(self.machines)),
-                                                                   size=self.machines_per_batch, replace=False))]
+                                                                   size=int(self.machines_per_batch), replace=False))]
             cycle_lengths = np.random.randint(self.cycle_length_min, self.cycle_length_max + 1,
-                                              size=self.machines_per_batch)
+                                              size=int(self.machines_per_batch))
             durations = cycle_lengths * self.cycle_duration
             starts = self.t + np.array([np.random.randint(0, self.batch_time - d) for d in durations])
             stops = starts + durations - 1
-            speeds = np.random.randint(self.operational_speed_min, self.operational_speed_max, self.machines_per_batch)
+            speeds = np.random.randint(int(self.operational_speed_min), int(self.operational_speed_max),
+                                       int(self.machines_per_batch))
             planning = [{'start': sta, 'stop': sto, 'speed': spd} for sta, sto, spd in zip(starts, stops, speeds)]
             self.planning = dict(zip(s, planning))
             # print(self.planning)
