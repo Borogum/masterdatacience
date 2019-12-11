@@ -33,7 +33,7 @@ def normalize(train, test):
     x_train_data = train[train.columns[:-1]]
     y_train_data = train[train.columns[-1]]
     x_test_data = test[test.columns[:-1]]
-    y_test_data = test[test.columns[1]]
+    y_test_data = test[test.columns[-1]]
 
     return ss.fit_transform(x_train_data), y_train_data.values, ss.transform(x_test_data), y_test_data.values
 
