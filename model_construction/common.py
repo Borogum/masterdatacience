@@ -24,8 +24,6 @@ def cm2pred(x):
             for k in range(int(x[i][j])):
                 y_true.append(i)
                 y_pred.append(j)
-    print(np.unique(y_true))
-    print(np.unique(y_pred))
     return y_true, y_pred
 
 
