@@ -45,8 +45,8 @@ def smote(x, y, p=.2, seed=None):
     minority_classes_size = sum([c[1] for c in minority_classes])
     desired_minority_classes_size = y.shape[0] * p
     scale = desired_minority_classes_size / minority_classes_size
-    ratio = dict((c[0], int(c[1] * scale)) for c in minority_classes)
-    sm = SMOTE(ratio=ratio, random_state=seed)
+    sampling_strategy  = dict((c[0], int(c[1] * scale)) for c in minority_classes)
+    sm = SMOTE(sampling_strategy=sampling_strategy, random_state=seed)
     x_res, y_res = sm.fit_sample(x, y)
 
     return x_res, y_res
