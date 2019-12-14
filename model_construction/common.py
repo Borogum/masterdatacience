@@ -24,7 +24,8 @@ def cm2pred(x):
             for k in range(int(x[i][j])):
                 y_true.append(i)
                 y_pred.append(j)
-
+    print(np.unique(y_true))
+    print(np.unique(y_pred))
     return y_true, y_pred
 
 
@@ -34,9 +35,9 @@ def hist2cm(x):
 
 
 def plot_results(conf_matrices, train_losses, eval_losses):
-
     n_classes = conf_matrices[0].shape[0]
-    reports = [classification_report(*cm2pred(cm), labels=range(n_classes), output_dict=True) for cm in conf_matrices]
+    reports = [classification_report(*cm2pred(cm), labels=range(n_classes), output_dict=True, zero_division=0) for cm in
+               conf_matrices]  # Zero division equals 0 to avoid warnings when class not found
 
     fig, ax = plt.subplots(2, 2)
     fig.tight_layout(pad=2.5)
@@ -111,7 +112,7 @@ class CustomWebsocketServerWorker(WebsocketServerWorker):
             return_raw_accuracy: bool = True,
             device: str = "cpu",
             return_confusion_matrix: bool = False,
-            example_inputs = None
+            example_inputs=None
     ):
         """Evaluates a model on the local dataset as specified in the local TrainConfig object.
         Args:
@@ -197,7 +198,7 @@ class CustomWebsocketClientWorker(WebsocketClientWorker):
             return_loss=True,
             return_raw_accuracy: bool = True,
             return_confusion_matrix: bool = False,
-            example_inputs = None,
+            example_inputs=None,
 
     ):
         """Call the evaluate() method on the remote worker (WebsocketServerWorker instance).
