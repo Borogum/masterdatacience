@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
         # Start server
         command = ['python',
-                   'server.py',
+                   'start_worker.py',
                    config_id,
                    config_host,
                    config_port,

@@ -2,11 +2,10 @@ import asyncio
 import argparse
 import configparser
 import torch
-import numpy as np
 import syft as sy
 from syft.frameworks.torch.federated import utils
-from model_construction.model import Classifier, loss_fn
-from federated.workers import CustomWebsocketClientWorker
+from single_model.model import Classifier, loss_fn
+from single_model.workers import CustomWebsocketClientWorker
 
 torch.manual_seed(0)
 
@@ -62,7 +61,7 @@ def evaluate_model_on_worker(model_identifier, worker, dataset_key, model, batch
 
 async def main():
     hook = sy.TorchHook(torch)
-    parser = argparse.ArgumentParser(description='Run a federated model training')
+    parser = argparse.ArgumentParser(description='Run a federated_model model training')
     parser.add_argument('config', type=str, help='Configuration file')
     parser.add_argument('rounds', type=int, help='Rounds')
     parser.add_argument('batch_size', type=int, help='Train batch size')
