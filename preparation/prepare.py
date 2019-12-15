@@ -54,7 +54,7 @@ def smote(x, y, p=.2, seed=None):
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Prepare company data')
+    parser = argparse.ArgumentParser(description='Prepare data')
     parser.add_argument('config', type=str, help='Configuration file')
     args = parser.parse_args()
     config = configparser.ConfigParser()

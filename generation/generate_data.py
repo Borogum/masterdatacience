@@ -4,8 +4,8 @@ import time
 import shutil
 import argparse
 import configparser
-from data_generation.simulation import Clock, Facility, Machine
-from data_generation.notify import CsvNotifier
+from generation.simulation import Clock, Facility, Machine
+from generation.notify import CsvNotifier
 
 
 def create_facility(configuration):
@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     start_time = time.time()
 
-    parser = argparse.ArgumentParser(description='Generate a facility dataset')
+    parser = argparse.ArgumentParser(description='Generate data')
     parser.add_argument('config', type=str, help='Facility configuration file')
     arg = parser.parse_args()
     config = configparser.ConfigParser()

@@ -3,11 +3,6 @@ Units:
  * Temperature: Celsius degrees
  * Pressure: kPa
  * Time: seconds
-
-- Crear la medias, maximos, mínimos etc...
-- Asignar id  de secuencia (global) y id de posicion (local)
-- Poner RUL
-
 """
 
 import os
@@ -88,7 +83,7 @@ def process(path, machine_id, gap=30, w=7, rolling_size=5):
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Process company data')
+    parser = argparse.ArgumentParser(description='Process data')
     parser.add_argument('config', type=str, help='Configuration file')
     args = parser.parse_args()
     config = configparser.ConfigParser()
@@ -120,8 +115,9 @@ if __name__ == '__main__':
         print('From %s:' % d)
         for f in glob.glob(os.path.join(telemetry_dir, 'telemetry_*.csv')):
             id = os.path.basename(f).split('_')[1]
-            print('Processing machine: %s ... ' % id, end='')
+            print('-> Processing machine: %s ... ' % id, end='')
             df = process(input_base_path, id, gap=config_gap, w=config_w, rolling_size=config_rolling_size)
             print('Done!')
             df.to_csv(os.path.join(output_base_path, 'processed_%s.csv' % id), index=False, sep=',',
                       decimal='.')
+        print('All done!')
