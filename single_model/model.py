@@ -4,11 +4,15 @@ import torch.nn.functional as F
 
 torch.manual_seed(0)
 
+# Loss function
+@torch.jit.script
+def loss_fn(pred, target):
+    return F.nll_loss(input=pred, target=target)
+
 
 class Classifier(nn.Module):
 
     def __init__(self):
-        torch.manual_seed(0)  # Reproducibility
         super().__init__()
         self.fc1 = nn.Linear(10, 5)
         self.fc2 = nn.Linear(5, 5)

@@ -1,0 +1,2 @@
+python train_and_validate.py ../configurations/single_model/configuration.cfg
+python start_worker.py  server 127.0.0.1 8777 "../data/preparation/facility A/train.csv" "../data/preparation/facility A/test.csv"
