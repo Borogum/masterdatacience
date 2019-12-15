@@ -24,11 +24,6 @@ def cm2pred(x):
     return y_true, y_pred
 
 
-def hist2cm(x):
-    """ Helper method that transforms a histogram into a confusion matrix"""
-    pass
-
-
 def show_results(conf_matrices, train_losses, eval_losses):
     n_classes = conf_matrices[0].shape[0]
     reports = [classification_report(*cm2pred(cm), labels=range(n_classes), output_dict=True, zero_division=0) for cm in
