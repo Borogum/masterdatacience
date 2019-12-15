@@ -1,7 +1,8 @@
 import argparse
 import torch
 import syft as sy
-from model_construction.common import MachineMaintenanceDataset, CustomWebsocketServerWorker
+from model_construction.common import MachineMaintenanceDataset
+from federated.workers import CustomWebsocketServerWorker
 
 torch.manual_seed(0)
 

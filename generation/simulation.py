@@ -6,8 +6,6 @@ class BrokenMachine(Exception):
 
 
 class Clock(object):
-    """Seconds"""
-
     __t = 0
 
     def __iter__(self):
@@ -184,7 +182,6 @@ class Facility(object):
                                        int(self.machines_per_batch))
             planning = [{'start': sta, 'stop': sto, 'speed': spd} for sta, sto, spd in zip(starts, stops, speeds)]
             self.planning = dict(zip(s, planning))
-            # print(self.planning)
 
         for m in self.machines:
             if m in self.planning:

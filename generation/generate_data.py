@@ -30,15 +30,16 @@ if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read(arg.config)
     cl = Clock()
-    facility_name = config['INFO']['name']
-    duration = config.getint('INFO', 'simulation_time')
+    facility_name = config['CONFIGURATION']['name']
+    duration = config.getint('CONFIGURATION', 'simulation_time')
     config_dict = {'clock': cl}
 
     for key in config['CONFIGURATION']:
-        try:
-            config_dict[key] = config.getfloat('CONFIGURATION', key)
-        except ValueError as e:
-            config_dict[key] = config.get('CONFIGURATION', key)
+        if key not in ['name', 'simulation_time']:
+            try:
+                config_dict[key] = config.getfloat('CONFIGURATION', key)
+            except ValueError as e:
+                config_dict[key] = config.get('CONFIGURATION', key)
 
     facility = create_facility(config_dict)
 
