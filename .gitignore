@@ -1,7 +1,9 @@
 .*
+~
 __pycache__
 venv
 data/
 examples/
 !examples/*.zip
 !.gitignore
+doc/TFM_borrador_modelo.doc
