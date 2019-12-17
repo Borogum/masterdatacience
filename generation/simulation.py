@@ -121,7 +121,7 @@ class Machine(object):
 
                     self.speed = (self.speed + (2 - h2) * self.target_speed) / 2
                     self.temperature = (2 - h1) * self.__g(self.temperature, self.ambient_temperature,
-                                                           self.temperature_max, self.speed / 1000,
+                                                           self.temperature_max, self.speed / 100,
                                                            0.01 * self.speed / 1000)
                     self.pressure = h1 * self.__g(self.pressure, self.ambient_pressure, np.inf,
                                                   self.speed * self.pressure_factor, 0.3 * self.speed / 1000)
