@@ -26,10 +26,11 @@ def process(path, machine_id, gap=30, w=7, rolling_size=5):
 
     # Aggregate by cycle
     telemetry_grouped_df = telemetry_df.groupby(by='cycle_id').agg(
-        {'id': ['max'], 'time': ['min', 'max'], 'speed': ['mean'],
+        {'id': ['max'], 'time': ['min', 'max'], 'speed': ['mean', 'max'],
          'target_speed': ['max'], 'temperature': ['mean', 'max'], 'pressure': ['mean', 'max']})
-    telemetry_grouped_df.columns = ['id', 'timestamp_start', 'timestamp_end', 'speed_avg', 'target_speed_max',
-                                    'temperature_avg', 'temperature_max', 'pressure_avg', 'pressure_max']
+    telemetry_grouped_df.columns = ['id', 'timestamp_start', 'timestamp_end', 'speed_avg', 'speed_max',
+                                    'target_speed_max', 'temperature_avg', 'temperature_max', 'pressure_avg',
+                                    'pressure_max']
     telemetry_grouped_df.reset_index(inplace=True)
 
     # Load event data if exists (if not, create a empty dataframe)
