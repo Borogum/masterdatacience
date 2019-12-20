@@ -3,7 +3,5 @@
 __pycache__
 venv
 data/
-examples/
-!examples/*.zip
+examples/*
 !.gitignore
-doc/TFM_borrador_modelo.doc
