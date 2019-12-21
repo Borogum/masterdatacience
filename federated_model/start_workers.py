@@ -43,9 +43,7 @@ if __name__ == '__main__':
         time.sleep(2)
         print('Done! (%s)' % processes[-1].pid)
 
-
-
-    print ('Press Ctrl+C to stop ... ')
+    print('Press Ctrl+C to stop ... ')
     try:
         while True:
             time.sleep(5)
