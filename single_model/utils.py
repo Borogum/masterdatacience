@@ -24,18 +24,18 @@ def cm2pred(x):
     return y_true, y_pred
 
 
-def show_results(conf_matrices, train_losses, eval_losses):
+def show_results(conf_matrices, train_losses, eval_losses, label='', loss_xlabel='Epoch'):
     n_classes = conf_matrices[0].shape[0]
     reports = [classification_report(*cm2pred(cm), labels=range(n_classes), output_dict=True, zero_division=0) for cm in
                conf_matrices]  # Zero division equals 0 to avoid warnings when a class not found (but doesn't work :D)
 
     fig, ax = plt.subplots(2, 2)
     fig.tight_layout(pad=2.5)
-    fig.suptitle('MODEL STATS')
+    fig.suptitle('MODEL STATS' + ((' (%s)' % label) if label != '' else ''))
 
     # Plot loss
     ax[0, 0].set_title('Loss')
-    ax[0, 0].set_xlabel('Epochs')
+    ax[0, 0].set_xlabel(loss_xlabel)
     ax[0, 0].set_ylabel('Loss')
     ax[0, 0].set_xticks(np.arange(start=0, stop=len(train_losses), step=2))
     ax[0, 0].plot(train_losses, label='Training loss')
@@ -64,7 +64,8 @@ def show_results(conf_matrices, train_losses, eval_losses):
     recalls = [r['macro avg']['recall'] for r in reports]
     f1_scores = [r['macro avg']['f1-score'] for r in reports]
     ax[1, 1].set_title('Scores')
-    ax[1, 1].set_xlabel('Epochs')
+    ax[1, 1].set_xticks(np.arange(start=0, stop=len(train_losses), step=2))
+    ax[1, 1].set_xlabel(loss_xlabel)
     ax[1, 1].plot(precisions, label='Precision')
     ax[1, 1].plot(recalls, label='Recall')
     ax[1, 1].plot(f1_scores, label='F1')

@@ -9,10 +9,10 @@ import configparser
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Turn on servers')
-    parser.add_argument('config', type=str, help='Configuration file')
+    parser.add_argument('workers', type=str, help='Workers')
     args = parser.parse_args()
     config = configparser.ConfigParser()
-    config.read(args.config)
+    config.read(args.workers)
 
     processes = []
     for section in config.sections():

@@ -6,8 +6,10 @@ import syft as sy
 from syft.frameworks.torch.federated import utils
 from single_model.model import Classifier, loss_fn
 from single_model.workers import CustomWebsocketClientWorker
+from single_model.utils import show_results
 
 torch.manual_seed(0)
+
 
 async def fit_model_on_worker(worker, traced_model, batch_size, epochs, max_nr_batches, lr):
 
@@ -28,14 +30,13 @@ async def fit_model_on_worker(worker, traced_model, batch_size, epochs, max_nr_b
     return worker.id, model
 
 
-def evaluate_model_on_worker(model_identifier, worker, dataset_key, model, batch_size):
+def evaluate_model_on_worker( worker, dataset_key, model, batch_size):
 
     model.eval()
     # Create and send train config
     train_config = sy.TrainConfig(
         batch_size=batch_size, model=model, loss_fn=loss_fn, optimizer_args=None, epochs=1
     )
-
     train_config.send(worker)
     result = worker.evaluate(
         dataset_key=dataset_key,
@@ -77,6 +78,7 @@ async def main():
         client.federation_participant = federation_participant
         client.clear_objects_remote()
         clients[kwargs_websocket['id']] = client
+        clients_results[kwargs_websocket['id']] = []
 
     model = Classifier()
     traced_model = torch.jit.trace(model, torch.zeros([1, 10], dtype=torch.float))
@@ -99,20 +101,20 @@ async def main():
             ]
         )
         print('All done!')
+
         print('Federating ... ', end='')
         models = {}
-
-        # Federate models (note that this will also change the model in models[0]
+        # Federate models
         for worker_id, worker_model in results:
             if worker_model is not None:
                 models[worker_id] = worker_model
-        # Model federation
         traced_model = utils.federated_avg(models)
         print('Federated!')
+
         print('Stats:')
         for client in clients:
+
             train_loss, train_confusion_matrix = evaluate_model_on_worker(
-                model_identifier='Federated model',
                 worker=clients[client],
                 dataset_key='train',
                 model=traced_model,
@@ -120,14 +122,13 @@ async def main():
             )
 
             test_loss, test_confusion_matrix = evaluate_model_on_worker(
-                model_identifier='Federated model',
                 worker=clients[client],
                 dataset_key='test',
                 model=traced_model,
                 batch_size=args.batch_size,
             )
 
-            clients_results[client] = (test_loss, test_confusion_matrix)
+            clients_results[client].append((train_loss, test_loss,  test_confusion_matrix))
             print('* Round %d. "%s" stats ==> Train loss: %.4f. Test loss: %.4f' % (curr_round, client, train_loss,
                                                                                   test_loss))
 
@@ -135,7 +136,10 @@ async def main():
 
     for client in clients_results:
         print(client)
-        print(clients_results[client][1].type(torch.int))  # Conf
+        train_losses = [cr[0] for cr in clients_results[client]]
+        test_losses = [cr[1] for cr in clients_results[client]]
+        conf_matrices= [cr[2] for cr in clients_results[client]]
+        show_results(conf_matrices, train_losses, test_losses, label=client, loss_xlabel='Round')
 
 
 if __name__ == "__main__":
