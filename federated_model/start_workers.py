@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
         # Start server
         command = ['python',
-                   'start_worker.py',
+                   '../single_model/start_worker.py',
                    config_id,
                    config_host,
                    config_port,
@@ -39,9 +39,11 @@ if __name__ == '__main__':
 
         print('Starting server %s ... ' % config_id, end='')
         processes.append(subprocess.Popen(command, stdout=subprocess.DEVNULL,
-                                          stderr=subprocess.PIPE))  # Don´t show turn on default msg
+                                          stderr=subprocess.PIPE))  # Don´t show default msg
         time.sleep(2)
-        print('Done!')
+        print('Done! (%s)' % processes[-1].pid)
+
+
 
     print ('Press Ctrl+C to stop ... ')
     try:

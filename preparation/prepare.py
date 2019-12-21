@@ -42,13 +42,10 @@ def smote(x, y, p=.2, seed=None):
 
     all_classes = Counter(y)
     minority_classes = all_classes.most_common()[1:]
-    minority_classes_size = sum([c[1] for c in minority_classes])
-    desired_minority_classes_size = y.shape[0] * p
-    scale = desired_minority_classes_size / minority_classes_size
-    sampling_strategy  = dict((c[0], int(c[1] * scale)) for c in minority_classes)
+    desired_minority_classes_size = int(y.shape[0] * p)
+    sampling_strategy = dict((c[0], max(desired_minority_classes_size, c[1])) for c in minority_classes)
     sm = SMOTE(sampling_strategy=sampling_strategy, random_state=seed)
     x_res, y_res = sm.fit_sample(x, y)
-
     return x_res, y_res
 
 
@@ -81,7 +78,7 @@ if __name__ == '__main__':
         os.makedirs(output_base_path)
 
         print('With %s:' % d)
-        print('Joining all files and do train test split ... ', end='')
+        print('Joining all files and doing train-test split ... ', end='')
         train_df, test_df = join_split(input_base_path, test_size=config_test_size, lookback=config_lookback)
         print('Done!')
         print('Normalizing data ... ', end='')

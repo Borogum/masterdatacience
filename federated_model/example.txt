@@ -1,0 +1,2 @@
+python start_workers ../configurations/federated_model/workers.cfg
+python train_and_validate ../configurations/federated_model/workers.cfg 10 32 1 0.005

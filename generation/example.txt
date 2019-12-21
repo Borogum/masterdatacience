@@ -1,1 +1,2 @@
 python generate_all_data.py ../configurations/generation
+python generate_data.py ../configurations/generation/pilot.cfg
