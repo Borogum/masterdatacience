@@ -84,7 +84,7 @@ def process(path, machine_id, gap=30, w=7, rolling_size=5):
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Process data')
+    parser = argparse.ArgumentParser(description='Process simulated data')
     parser.add_argument('config', type=str, help='Configuration file')
     args = parser.parse_args()
     config = configparser.ConfigParser()
