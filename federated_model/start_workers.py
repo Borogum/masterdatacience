@@ -1,10 +1,10 @@
-
 import sys
 import time
 import argparse
 import subprocess
 import configparser
 
+""" Starts workers for Federated model construction """
 
 if __name__ == '__main__':
 
@@ -38,10 +38,10 @@ if __name__ == '__main__':
             command.append('--verbose')
 
         print('Starting server %s ... ' % config_id, end='')
-        processes.append(subprocess.Popen(command, stdout=subprocess.DEVNULL,
-                                          stderr=subprocess.PIPE))  # Don´t show default msg
+        processes.append(subprocess.Popen(command)) #, stdout=subprocess.DEVNULL,
+                                          #stderr=subprocess.PIPE))  # Don´t show default msg
         time.sleep(2)
-        print('Done! (%s)' % processes[-1].pid)
+        print('Done! (PID: %s)' % processes[-1].pid)
 
     print('Press Ctrl+C to stop ... ')
     try:
@@ -52,5 +52,3 @@ if __name__ == '__main__':
         for p in processes:
             p.terminate()
         sys.exit(0)
-
-
