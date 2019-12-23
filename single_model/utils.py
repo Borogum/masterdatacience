@@ -1,3 +1,4 @@
+import warnings
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -25,9 +26,14 @@ def cm2pred(x):
 
 
 def show_results(conf_matrices, train_losses, eval_losses, label='', loss_xlabel='Epoch'):
+
+    """ Show historical stats based on historical train and evaluation data"""
+
     n_classes = conf_matrices[0].shape[0]
-    reports = [classification_report(*cm2pred(cm), labels=range(n_classes), output_dict=True, zero_division=0) for cm in
-               conf_matrices]  # Zero division equals 0 to avoid warnings when a class not found (but doesn't work :D)
+    with warnings.catch_warnings():  # Avoid warnings
+        warnings.simplefilter("ignore")
+        reports = [classification_report(*cm2pred(cm), labels=range(n_classes), output_dict=True, zero_division=0) for
+                   cm in conf_matrices]
 
     fig, ax = plt.subplots(2, 2)
     fig.tight_layout(pad=2.5)
@@ -38,6 +44,7 @@ def show_results(conf_matrices, train_losses, eval_losses, label='', loss_xlabel
     ax[0, 0].set_xlabel(loss_xlabel)
     ax[0, 0].set_ylabel('Loss')
     ax[0, 0].set_xticks(np.arange(start=0, stop=len(train_losses), step=2))
+    ax[0, 0].set_xticklabels(np.arange(start=0, stop=len(train_losses), step=2), rotation=45)
     ax[0, 0].plot(train_losses, label='Training loss')
     ax[0, 0].plot(eval_losses, label='Validation loss')
     ax[0, 0].legend(frameon=False)
@@ -52,7 +59,7 @@ def show_results(conf_matrices, train_losses, eval_losses, label='', loss_xlabel
     ax[1, 0].set_xlabel('Predicted label')
 
     # Plot support
-    ax[0, 1].bar(range(n_classes), [reports[-1][l]['support'] for l in labels])
+    ax[0, 1].bar(range(n_classes), [reports[-1][label]['support'] for label in labels])
     ax[0, 1].set_xticks(range(n_classes))
     ax[0, 1].set_xticklabels(labels)
     ax[0, 1].set_xlabel('Class')
@@ -65,6 +72,7 @@ def show_results(conf_matrices, train_losses, eval_losses, label='', loss_xlabel
     f1_scores = [r['macro avg']['f1-score'] for r in reports]
     ax[1, 1].set_title('Scores')
     ax[1, 1].set_xticks(np.arange(start=0, stop=len(train_losses), step=2))
+    ax[1, 1].set_xticklabels(np.arange(start=0, stop=len(train_losses), step=2), rotation=45)
     ax[1, 1].set_xlabel(loss_xlabel)
     ax[1, 1].plot(precisions, label='Precision')
     ax[1, 1].plot(recalls, label='Recall')
@@ -72,6 +80,8 @@ def show_results(conf_matrices, train_losses, eval_losses, label='', loss_xlabel
     ax[1, 1].legend(frameon=False)
 
     # Print summary
-    print(
-        classification_report(*cm2pred(conf_matrices[-1]), labels=range(n_classes), output_dict=False, zero_division=0))
-    plt.show()
+    with warnings.catch_warnings():  # Avoid warnings
+        warnings.simplefilter("ignore")
+        print(classification_report(*cm2pred(conf_matrices[-1]), labels=range(n_classes), output_dict=False,
+                                    zero_division=0))
+        plt.show()

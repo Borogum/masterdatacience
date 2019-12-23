@@ -1,12 +1,13 @@
-import sys
-import signal
 import argparse
 import torch
 import syft as sy
-from single_model.datasets import MachineMaintenanceDataset
+from single_model.datasets import MachineDataset
 from single_model.workers import CustomWebsocketServerWorker
 
 torch.manual_seed(0)
+
+""" Starts a server worker """
+
 
 if __name__ == '__main__':
 
@@ -21,8 +22,8 @@ if __name__ == '__main__':
 
     hook = sy.TorchHook(torch)
     kwargs_websocket = {'id': args.id, 'hook': hook, 'host': args.host, 'port': args.port, 'verbose': args.verbose}
-    train_dataset = MachineMaintenanceDataset(args.train)
-    test_dataset = MachineMaintenanceDataset(args.test)
+    train_dataset = MachineDataset(args.train)
+    test_dataset = MachineDataset(args.test)
     server = CustomWebsocketServerWorker(**kwargs_websocket)
     train_dataset = sy.BaseDataset(data=train_dataset.data, targets=train_dataset.targets)
     server.add_dataset(train_dataset, key='train')

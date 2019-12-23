@@ -1,10 +1,9 @@
-import sys
 import time
-import signal
 import argparse
 import subprocess
 import configparser
 import torch
+from torch.jit import trace
 import syft as sy
 from single_model.utils import show_results
 from single_model.workers import CustomWebsocketClientWorker
@@ -50,17 +49,16 @@ if __name__ == '__main__':
 
     print('Starting worker ... ', end='')
     p = subprocess.Popen(command, stdout=subprocess.DEVNULL)
-    time.sleep(2) # Wait for worker
-    print('Done!')
+    time.sleep(2)  # Wait for worker
+    print('Done! (PID: %s)' % p.pid)
 
-    # Train and validate
-
+    print('Training and validating ...')
     hook = sy.TorchHook(torch)
     kwargs_websocket = {'hook': hook, 'id': config_id, 'host': config_host, 'port': config_port,
                         'verbose': config_verbose}
     worker = CustomWebsocketClientWorker(**kwargs_websocket)
     worker.clear_objects_remote()
-    traced_model = torch.jit.trace(Classifier(),  torch.rand(1, 10))
+    traced_model = trace(Classifier(),  torch.rand(1, 10))
 
     train_losses = []
     test_losses = []
@@ -94,7 +92,7 @@ if __name__ == '__main__':
             batch_size=config_batch,
             model=traced_model,
             loss_fn=loss_fn,
-            optimizer_args=None,
+            optimizer_args={},
         )
         train_config.send(worker)
 
@@ -113,7 +111,7 @@ if __name__ == '__main__':
             batch_size=config_batch,
             model=traced_model,
             loss_fn=loss_fn,
-            optimizer_args=None,
+            optimizer_args={},
         )
         train_config.send(worker)
 
@@ -130,6 +128,9 @@ if __name__ == '__main__':
 
         print('Epoch %d. Train loss: %.4f. Test loss: %.4f' % (epoch+1, train_losses[-1], test_losses[-1]))
 
+    print('Done!')
+
+    # Show stats
     show_results([m.numpy() for m in confusion_matrices], train_losses, test_losses)
 
     # Kill to worker subprocess

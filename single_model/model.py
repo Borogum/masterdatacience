@@ -1,13 +1,16 @@
 import torch
-from torch import nn, sigmoid, tanh, relu
-import torch.nn.functional as F
+from torch import nn, sigmoid
+import torch.nn.functional as f
+from torch.jit import script
 
 torch.manual_seed(0)
 
-# Loss function
-@torch.jit.script
+""" Base model """
+
+
+@script
 def loss_fn(pred, target):
-    return F.nll_loss(input=pred, target=target)
+    return f.nll_loss(input=pred, target=target)
 
 
 class Classifier(nn.Module):
@@ -26,5 +29,5 @@ class Classifier(nn.Module):
         x = sigmoid(self.fc2(x))
         x = sigmoid(self.fc3(x))
         x = sigmoid(self.fc4(x))
-        x = F.log_softmax(self.fc_out(x), dim=1)
+        x = f.log_softmax(self.fc_out(x), dim=1)
         return x

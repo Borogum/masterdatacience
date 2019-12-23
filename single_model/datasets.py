@@ -3,7 +3,9 @@ import torch
 from torch.utils.data import Dataset
 
 
-class MachineMaintenanceDataset(Dataset):
+class MachineDataset(Dataset):
+
+    """ Custom dataset class to load data """
 
     def __init__(self, csv_file):
         self.df = pd.read_csv(csv_file, sep=',', decimal='.')

@@ -3,6 +3,8 @@ import numpy as np
 from syft.workers.websocket_server import WebsocketServerWorker
 from syft.workers.websocket_client import WebsocketClientWorker
 
+""" Change original classes to get custom stats """
+
 
 class CustomWebsocketServerWorker(WebsocketServerWorker):
 
