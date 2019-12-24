@@ -19,7 +19,7 @@ class Clock(object):
         return self.__t
 
 
-class HealIndex(object):
+class HealthIndex(object):
 
     def __init__(self, name, ttf, d=0.05, a=-0.3, b=0.2, th=0):
         self.__name = name
@@ -55,8 +55,8 @@ class Machine(object):
         self.telemetry_notifier = telemetry_notifier
         self.event_notifier = event_notifier
         self.clock = clock
-        self.h1 = HealIndex('F1', np.random.randint(self.ttf1_min, self.ttf1_max))
-        self.h2 = HealIndex('F2', np.random.randint(self.ttf2_min, self.ttf2_max))
+        self.h1 = HealthIndex('F1', np.random.randint(self.ttf1_min, self.ttf1_max))
+        self.h2 = HealthIndex('F2', np.random.randint(self.ttf2_min, self.ttf2_max))
         self.ambient_temperature = ambient_temperature
         self.ambient_pressure = ambient_pressure
         self.speed_threshold = speed_threshold
@@ -100,8 +100,8 @@ class Machine(object):
 
     def repair(self, seconds):
         self.maintenance = seconds
-        self.h1 = HealIndex('F1', np.random.randint(self.ttf1_min, self.ttf1_max))
-        self.h2 = HealIndex('F2', np.random.randint(self.ttf2_min, self.ttf2_max))
+        self.h1 = HealthIndex('F1', np.random.randint(self.ttf1_min, self.ttf1_max))
+        self.h2 = HealthIndex('F2', np.random.randint(self.ttf2_min, self.ttf2_max))
 
     def broken(self):
         return self.maintenance != 0
