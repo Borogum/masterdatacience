@@ -4,7 +4,7 @@ El código fuente esta divido en cuatro partes:
 
 ##  Generación
 
-Esta parte es la encargada de generar los datos simulados. Dentro de este paquete podemos encontrar cuatro módulos:
+Esta parte es la encargada de simular los datos de las instalaciones. Dentro de este paquete podemos encontrar cuatro módulos:
 
 * simulation.py
 * notify.py
@@ -70,4 +70,4 @@ Con la configuración anterior se almacenarían los datos de telemetría (por m�
 
 ### generate_all_data.py
 
-Este script de conveniencia admite como parámetro de entrada un carpeta. El código escanea esta carpeta en busca de archivos de configuración. Para cada archivo encontrado ejecutará las simulaciones de forma paralela de acuerdo con la configuración.
+Este script de conveniencia admite como parámetro de entrada una carpeta. El código escanea esta carpeta en busca de archivos de configuración. Para cada archivo encontrado ejecutará las simulaciones de forma paralela de acuerdo con la configuración.
