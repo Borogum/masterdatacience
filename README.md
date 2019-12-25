@@ -172,14 +172,168 @@ Este modulo contiene dos objetos:
 * La clase que describe al modelo de clasificación (Classifier).
 * La función de coste que se utilizará para el ajuste del modelo (loss_fn).
 
-## utils.py
+### utils.py
 
 LA finalidad de este módulo es proporcionar funciones que sin tener un objetivo específico, serán utilizados de manera transversal por varios paquetes. El módulo contiene dos funciones:
 
-* cm2pred: Esta función transforma una matriz de confusión en dos vectores. Uno de ellos contendrá los etiquetas que suponen son ciertas (y_true) y el otro las etiquetas predichas por el modelo (y_pred).
+* cm2pred: Esta función transforma una matriz de confusión en dos vectores. Uno de ellos contendrá las etiquetas que suponen ciertas (y_true) y el otro las etiquetas predichas por el modelo (y_pred).
 
-* show_results: Dado un histórico de matrices de confusión y costes (train y test) crea una representación gráfica de estos. Además calcula una series de estadísticas como: precisión, F1-score, recall, etc.
+* show_results: Dado un histórico de matrices de confusión y costes (train y test) crea una representación gráfica de estas. Además, calcula una serie de estadísticas como: precisión, F1-score, recall, etc.
 
-## workers.py
+### workers.py
 
-Dado que la librería no proporcionaba ciertas estadísiticas que se consideraban de interés fué necesario
+Dado que el framework utilizado (pySyft) no proporcionaba ciertas estadísticas que se consideraban de interés a la hora de evaluar los modelos fue necesario añadirlas. Para ello se crearon dos clases __CustomWebsocketClientWorker__ y __CustomWebsocketServerWorker__ que heredan de __WebsocketClientWorker__ y __WebsocketServerWorker__ respectivamente. Estas clases además de todas las estadísticas que proporcionaban las clases originales proporcionan también como método de evaluación la matriz de confusión.
+
+### start_worker.py
+
+El objetivo de este script es poner en marcha un __CustomWebsocketServerWorker__ con los parámetros especificados por línea de comandos. Su sintaxis sería el siguiente:
+
+```
+python start_worker.py id host port train_data test_data --verbose
+```
+Donde:
+
+* id: es el nombre del servidor
+* host: ip del servidor
+* port: puerto por el que escuchara el servidor
+* train_data: archivo que contiene los datos de entrenamiento
+* test_data: archivo que contiene los datos de test
+
+Un ejemplo de uso podría ser el siguiente:
+
+```
+python start_worker.py  server 127.0.0.1 8777 "data/train.csv" "data/test.csv"
+```
+
+### train_and_validate.py
+
+Este script entrena y valida el modelo diseñado en __model.py__. Los parámetros de entrenamiento y del worker encargado de realizar la tarea son especificados en un archivo de configuración. A continuación, se muestra un ejemplo de uso:
+
+```
+python train_and_validate.py configuration.cfg
+```
+
+Un archivo de configuración podría ser el siguiente:
+
+```
+[CONFIGURATION]
+
+;Worker config
+worker_id = Pilot
+host = 127.0.0.1
+port = 8777
+verbose = 0
+; Train config
+epochs = 35
+batch = 32
+optimizer = Adam
+lr = 0.002
+shuffle = 1
+; Data config
+train = data/train.csv
+test = data/test.csv
+```
+
+## Creación del modelo federado (federated_model)
+
+Para la creación del modelo federado se han construido dos scripts:
+
+* start_workers.py
+* train_and_validate.py
+
+### start_workers.py
+
+Este es el script encargado de iniciar los workers que participarán en la construcción y en la validación del modelo federado. Su invocación se realizaría de la siguiente manera:
+
+```
+python start_workers workers.cfg
+
+```
+
+Donde el archivo de configuración tendría una estructura similar a la siguiente:
+
+```
+[WORKER 0]
+id = Pilot
+host = 127.0.0.1
+port = 8800
+verbose = 0
+train = ../data/preparation/pilot/train.csv
+test = ../data/preparation/pilot/test.csv
+
+[WORKER 1]
+id = A
+host = 127.0.0.1
+port = 8801
+verbose = 0
+train = ../data/preparation/A/train.csv
+test = ../data/preparation/A/test.csv
+
+[WORKER 2]
+id = B
+host = 127.0.0.1
+port = 8802
+verbose = 0
+train = ../data/preparation/B/train.csv
+test = ../data/preparation/B/test.csv
+
+[WORKER 3]
+id = N
+host = 127.0.0.1
+port = 8803
+verbose = 0
+train = ../data/preparation/N/train.csv
+test = ../data/preparation/N/test.csv
+```
+
+### train_and_validate.py
+
+Este script funciona de forma análoga al descrito en la sección anterior. Su ejecución se realizaría de la siguiente manera:
+
+```
+python train_and_validate configuration.cfg
+```
+
+Donde el archivo de configuración en este caso aunque guarda ciertas similitudes tiene una estructura propia. Un ejemplo podría ser el siguiente:
+
+```
+[TRAIN]
+rounds = 15
+epochs = 35
+federate_after = 5
+batch = 32
+optimizer = Adam
+lr = 0.002
+shuffle = 1
+
+[WORKER 0]
+id = Pilot
+host = 127.0.0.1
+port = 8800
+verbose = 0
+federation_participant = 1
+
+[WORKER 1]
+id = A
+host = 127.0.0.1
+port = 8801
+verbose = 0
+federation_participant = 1
+
+[WORKER 2]
+id = B
+host = 127.0.0.1
+port = 8802
+verbose = 0
+federation_participant = 1
+
+[WORKER 3]
+id = N
+host = 127.0.0.1
+port = 8803
+verbose = 0
+federation_participant = 0
+
+```
+
+Es importante destacar que el atributo __federation_participant__ de las secciones referidas a los workers permite controlar del worker en la construcción de modelo y en su validación. El valor 1 indica que ese worker participara en la creación del modelo y en su validación mientras que el valor 0 indicará que únicamente participará en la fase de validación.
