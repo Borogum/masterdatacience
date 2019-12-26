@@ -1,6 +1,15 @@
 # Código fuente TFM
 
-El código fuente esta divido en cuatro partes:
+El código fuente esta divido en cinco partes:
+
+* Generación
+* Procesado
+* Preparado
+* Creación del modelo base
+* Creación del modelo federado
+
+En las siguientes secciones se describirá detalladamente cada una de las partes.
+
 
 ##  Generación (generation)
 
@@ -24,15 +33,15 @@ Contiene las clases necesarias para poder realizar las simulaciones de las insta
 
 ### notify.py
 
-Este modulo contiene un conjunto de clases que permiten la comunicación (telemetría) de una máquina con otros dispositivos (archivos, consola, etc.). Se han implementado tres adaptadores:
+Este módulo contiene un conjunto de clases que permiten la comunicación (telemetría) de una máquina con otros dispositivos (archivos, consola, etc.). Se han implementado tres clases:
 
 * __ConsoleNotifier:__ Muestra los datos por consola.
 * __ParquetNotifier:__ Almacena los datos en el formato Apache Parquet (https://parquet.apache.org/).
-* __CsvNotifier:__ Almacena los datos en formato csv (adaptador usado por defecto).
+* __CsvNotifier:__ Almacena los datos en formato csv (clase usada por defecto).
 
 ### generate_data.py
 
-Este módulo realiza una simulación cuyas características se encuentran establecidas en un archivo de configuración. La forma de invocarlo es la siguiente:
+Este script realiza una simulación y almacena los resultados (telemetría y mantenimiento) en archivos csv. Las características de la instalación a simular deben ser establecidas en un archivo de configuración. La forma de invocar este script es la siguiente:
 
 ```
 python generate_data.py plant.cfg
@@ -77,20 +86,20 @@ telemetry_path = plant/telemetry
 event_path =  plant/event
 ```
 
-Con la configuración anterior se almacenarían los datos de telemetría (por máquina) en la carpeta 'plant/telemetry' y los datos de mantenimiento (también por máquina) en la carpeta 'plant/event'.
+Con la configuración anterior, se almacenarían los datos de telemetría (por máquina) en la carpeta "plant/telemetry/" y los datos de mantenimiento (también por máquina) en la carpeta "plant/event/".
 
 ### generate_all_data.py
 
-Este script de conveniencia admite como parámetro de entrada una carpeta. El código escanea esta carpeta en busca de archivos de configuración. Para cada archivo encontrado ejecutará las simulaciones de forma paralela de acuerdo con la configuración.
+Este script de conveniencia admite como parámetro de entrada una carpeta. El código escanea esta carpeta en busca de archivos de configuración. Para cada archivo encontrado se ejecutará la simulación correspondiente. Las simulaciones se realizarán de forma paralelizada lo que acelerará el proceso de generación de datos.
 
 ## Procesado (processing)
 
-Para el procesado se utiliza un único script 'process.py'. Este script procesará los datos obtenidos de la etapa de generación. Las trasformaciones que realizará serán las siguientes:
+Para el procesado se utiliza un único script: "process.py". Este script procesará los datos obtenidos de la etapa de generación. Las trasformaciones que realizará sobre los datos serán las siguientes:
 
 * Unificar los datos de mantenimiento y telemetría en un único archivo (por máquina).
 * Agregar los datos a nivel de ciclo.
 * Etiquetar las instancias.
-* Calcular las agregaciones temporales.
+* Calcular agregaciones temporales.
 
 La forma de invocar este script es la siguiente:
 
@@ -119,7 +128,7 @@ path_out = data/processing/
 
 ## Preparación (preparation)
 
-Como en el caso anterior se ha utilizado un único script que realizará toda la tarea de preparación de los datos para el proceso de entrenamiento y validación de los modelos de Machine Learning. Mas concretamente las tareas que realizará serán las siguientes:
+Como en el caso anterior, se ha utilizado un único script que realizará toda la tarea de preparación de los datos: "prepare.py". Esta última fase en la transformación de los datos estará centrada en construir un dataset cuyo objetivo es el proceso de entrenamiento y validación de los modelos de Machine Learning. Concretamente las tareas que realizará serán las siguientes:
 
 * Unión de los datos de todas las máquinas en un único archivo.
 * División del dataset en dos conjuntos: uno será utilizado para el entrenamiento y otro para la validación.
@@ -132,7 +141,7 @@ La forma de invocarlo será la siguiente:
 python prepare.py preparation.cfg
 ```
 
-El archivo de configuración tendrá la siguiente estructura:
+El archivo de configuración deberá tener la siguiente estructura:
 
 ```
 [CONFIGURATION]
@@ -149,9 +158,9 @@ path_out = data/preparation/
 
 ```
 
-## Creación modelo base (single_model)
+## Creación del modelo base (single_model)
 
-Este paquete contiene los módulos necesarios para la creación del modelo que, en una fase posterior, se utilizará como modelo base para la construcción del modelo federado. Este paquete esta compuesto por los siguientes módulos:
+Este paquete contiene los módulos necesarios para la creación del modelo que, en una fase posterior, se utilizará como modelo base para la construcción del modelo federado. Este paquete está compuesto por los siguientes módulos:
 
 * datasets.py
 * model.py
@@ -163,30 +172,30 @@ Este paquete contiene los módulos necesarios para la creación del modelo que, 
 
 ### datasets.py
 
-Este módulo contiene una única clase 'MachineDataset' que hereda de la clase Dataset (pyTorch). Esta clase facilitará la carga de datos ya que permite abstraernos de la estructura subyacente del dataset.
+Este módulo contiene una única clase llamada __MachineDataset__ que hereda de la clase __Dataset__ (pyTorch). Esta clase facilitará la carga de los datos ya que permitirá la abstracción de la estructura subyacente de los datos.
 
 ### model.py
 
-Este modulo contiene dos objetos:
+Este módulo contiene dos objetos:
 
-* La clase que describe al modelo de clasificación (Classifier).
-* La función de coste que se utilizará para el ajuste del modelo (loss_fn).
+* La clase que describe al modelo de clasificación denominada __Classifier__.
+* La función de coste que se utilizará para el ajuste del modelo cuyo nombre será __loss_fn__.
 
 ### utils.py
 
-LA finalidad de este módulo es proporcionar funciones que sin tener un objetivo específico, serán utilizados de manera transversal por varios paquetes. El módulo contiene dos funciones:
+La finalidad de este módulo es proporcionar funciones que, sin tener un objetivo específico, serán utilizados de manera transversal por varios paquetes. El módulo contiene dos funciones:
 
-* cm2pred: Esta función transforma una matriz de confusión en dos vectores. Uno de ellos contendrá las etiquetas que suponen ciertas (y_true) y el otro las etiquetas predichas por el modelo (y_pred).
+* __cm2pred__ - Esta función transforma una matriz de confusión en dos vectores. Uno de ellos contendrá las etiquetas que se suponen ciertas (y_true) y el otro las etiquetas predichas por el modelo (y_pred).
 
-* show_results: Dado un histórico de matrices de confusión y costes (train y test) crea una representación gráfica de estas. Además, calcula una serie de estadísticas como: precisión, F1-score, recall, etc.
+* __show_results__ - Dado un histórico de matrices de confusión y costes (train y test) crea una representación gráfica de estas. Además, calcula una serie de estadísticas como: precisión, F1-score, recall, etc.
 
 ### workers.py
 
-Dado que el framework utilizado (pySyft) no proporcionaba ciertas estadísticas que se consideraban de interés a la hora de evaluar los modelos fue necesario añadirlas. Para ello se crearon dos clases __CustomWebsocketClientWorker__ y __CustomWebsocketServerWorker__ que heredan de __WebsocketClientWorker__ y __WebsocketServerWorker__ respectivamente. Estas clases además de todas las estadísticas que proporcionaban las clases originales proporcionan también como método de evaluación la matriz de confusión.
+Dado que el framework utilizado (pySyft) no proporciona ciertas estadísticas que se consideraban de interés a la hora de evaluar los modelos fue necesario añadirlas. Para ello se crearon dos clases __CustomWebsocketClientWorker__ y __CustomWebsocketServerWorker__ que heredan de __WebsocketClientWorker__ y __WebsocketServerWorker__ respectivamente. Estas clases además de todas las estadísticas que proporcionaban las clases originales proporcionan también como método de evaluación la matriz de confusión.
 
 ### start_worker.py
 
-El objetivo de este script es poner en marcha un __CustomWebsocketServerWorker__ con los parámetros especificados por línea de comandos. Su sintaxis sería el siguiente:
+El objetivo de este script es poner en marcha un __CustomWebsocketServerWorker__ con los parámetros especificados en línea de comandos. Su sintaxis sería el siguiente:
 
 ```
 python start_worker.py id host port train_data test_data --verbose
@@ -198,6 +207,7 @@ Donde:
 * port: puerto por el que escuchara el servidor
 * train_data: archivo que contiene los datos de entrenamiento
 * test_data: archivo que contiene los datos de test
+* --verbose: Es un parámetro adicional que controla los mensajes que se muestran por consola
 
 Un ejemplo de uso podría ser el siguiente:
 
@@ -207,7 +217,7 @@ python start_worker.py  server 127.0.0.1 8777 "data/train.csv" "data/test.csv"
 
 ### train_and_validate.py
 
-Este script entrena y valida el modelo diseñado en __model.py__. Los parámetros de entrenamiento y del worker encargado de realizar la tarea son especificados en un archivo de configuración. A continuación, se muestra un ejemplo de uso:
+Este script entrena y valida el modelo implementado en __model.py__. Los parámetros de entrenamiento y del worker encargado de realizar la tarea son especificados en un archivo de configuración. A continuación, se muestra un ejemplo de uso:
 
 ```
 python train_and_validate.py configuration.cfg
@@ -236,7 +246,7 @@ test = data/test.csv
 
 ## Creación del modelo federado (federated_model)
 
-Para la creación del modelo federado se han construido dos scripts:
+Para la creación del modelo federado se han diseñado dos scripts:
 
 * start_workers.py
 * train_and_validate.py
@@ -250,7 +260,7 @@ python start_workers workers.cfg
 
 ```
 
-Donde el archivo de configuración tendría una estructura similar a la siguiente:
+Donde el archivo de configuración debería tener una estructura similar a la siguiente:
 
 ```
 [WORKER 0]
@@ -294,7 +304,7 @@ Este script funciona de forma análoga al descrito en la sección anterior. Su e
 python train_and_validate configuration.cfg
 ```
 
-Donde el archivo de configuración en este caso aunque guarda ciertas similitudes tiene una estructura propia. Un ejemplo podría ser el siguiente:
+Donde el archivo de configuración aunque guarda ciertas similitudes con el descrito anteriormente tiene una estructura propia. Un ejemplo de configuración podría ser la siguiente:
 
 ```
 [TRAIN]
@@ -336,4 +346,4 @@ federation_participant = 0
 
 ```
 
-Es importante destacar que el atributo __federation_participant__ de las secciones referidas a los workers permite controlar del worker en la construcción de modelo y en su validación. El valor 1 indica que ese worker participara en la creación del modelo y en su validación mientras que el valor 0 indicará que únicamente participará en la fase de validación.
+Es importante destacar que el atributo __federation_participant__ de las secciones referidas a los workers permite controlar la participación del worker en la construcción de modelo y en su validación. El valor 1 indica que ese worker participará en la creación del modelo y en su validación mientras que el valor 0 indicará que únicamente participará en la fase de validación.
