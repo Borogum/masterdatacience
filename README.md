@@ -22,7 +22,7 @@ Esta parte es la encargada de simular los datos de las instalaciones. Dentro de 
 
 ### simulation.py
 
-Contiene las clases necesarias para poder realizar las simulaciones de las instalaciones.
+Contiene las clases necesarias para poder realizar las simulaciones de las instalaciones:
 
 * __BrokenMachine:__  Excepción que será lanzada cuando una máquina llegue a un punto de ruptura.
 * __Clock:__ Reloj, cada "tick" será un segundo.
