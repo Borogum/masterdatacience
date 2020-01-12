@@ -1,42 +1,72 @@
 # Presentación
 
-## Diapositiva 1
+## Diapositiva 1 (Introducción)
 
-Bienvenidos a la presentación del trabajo fin de master cuyo título es: "Detección de eventos anómalos en un entorno industrial mediante el uso de técnicas de Federated Learning"
-mi nombre es Darío Martín García Carretero. A lo largo de esta presentación se va mostrar una de las muchas aplicaciones del uso del aprendizaje federado. En este caso se utilizará como herramienta para la detección de eventos anómalos en un entorno industrial. Sin más preámbulos comencemos con la presentación.
+Bienvenidos a la presentación del trabajo fin de master: "Detección de eventos anómalos en un entorno industrial mediante el uso de técnicas de Federated Learning" mi nombre es Darío Martín García Carretero.
 
-## Diapositiva 2
+A lo largo de esta presentación se va mostrar una de las muchas aplicaciones del uso del aprendizaje federado. En este caso se utilizará como herramienta para la detección de eventos anómalos en un entorno industrial. Sin más preámbulos comencemos con la presentación.
 
-Antes de comenzar nos situaremos en el contexto del problema que pretendemos resolver.
+
+## Diapositiva 2 (Contexto y justificación)
+
+Primero comencemos situando el contexto y justificando la necesidad del trabajo.
 
 ### Bloque 1
 
-Primero, ¿Qué entendemos por un evento anómalo?
+¿Qué entendemos por un evento anómalo?
 
-Un evento anómalo es aquel que se produce de forma repentina y sin previsión. Estos eventos anómalos pueden ser de muy diversas índoles dependiendo del contexto. Por ejemplo, dentro de la medicina un evento anómalo podría ser una arritmia cardiaca detectada en un paciente o, el en contexto de la seguridad podría ser el sonido del disparo de una pistola que ha sido registrado en la grabaciones de las cámaras de seguridad.
+Un evento anómalo es aquel que se produce de forma repentina y sin previsión. Estos eventos anómalos pueden ser de muy diversas índoles dependiendo del contexto. Por ejemplo, dentro de la medicina un evento anómalo podría ser una arritmia cardiaca detectada en un paciente o, el en contexto de la seguridad podría ser el sonido del disparo de una pistola que ha sido registrado en las grabaciones de una cámara de seguridad.
 
 ## Bloque 2
+
 En un entorno industrial, los eventos anómalos también pueden ser de muy diversa índole, en nuestro trabajo consideraremos como evento anómalo los fallos que, irremediablemente se producen en las máquinas debido al desgaste derivado de su uso continuado.
 
 ## Bloque 3
 
 Hay que tener en cuenta que estos fallos pueden provocar grandes daños económicos y personales. Por lo que su detección es algo muy importante que puede ayudar a prevenir situaciones irreversibles.
 
-## Diapositiva 3
-
-Por lo tanto, ¿Cuál va ser nuestro objetivo?
-
-Nuestro objetivo será detectar posibles fallos en las máquinas antes de que lleguen a producirse. Evitando así situaciones indeseables.
+Después de explicar el contexto y la justificación pasemos ahora a exponer el caso concreto que pretendemos resolver.
 
 
-## Diapositiva 4
+## Diapositiva 3 (Escenario I)
 
-Como ya indicamos anteriormente, nuestro objetivo será detectar posibles fallos en las máquinas antes de que estos lleguen a producirse. Para ello, utilizaremos técnicas de aprendizaje automático, en inglés, Machine Learning.
-
-A continuación se realizará una brevísima introducción al Machine Learning.
+Una empresa desea implantar un sistema que detecte las posibles averías de las máquinas de sus factorías antes de que estas puedan provocar daños tanto al personal como a las propias instalaciones.
 
 ### Bloque 1
-__Hemos mencionado que resolveremos el problema gracias al machines learning pero,__
+
+La empresa dispone de plantas repartidas por todo el mundo. A pesar de pertenecer a la misma compañía cada una de las instalaciones tiene sus propias particularidades en cuanto al tipo de productos que fabrican, la manera de fabricarlos, etc. A estas diferencias se han de añadir también las condiciones ambientales de cada lugar: temperatura, humedad, presión atmosférica, etc. A pesar de estas diferencias, las máquinas utilizadas en todas las factorías son similares.
+
+
+## Bloque 2
+
+A pesar de pertenecer a la misma compañía, las plantas trabajan con un alto grado de independencia y de hecho, suelen competir entre ellas en cuestiones como la cantidad de producción, calidad, etc. Debido a esta competitividad, las factorías son reacias a compartir datos sobre sus técnicas de producción, las configuraciones de sus máquinas, etc. Esto implica que el acceso a sus datos está muy restringido y estos pueden ser únicamente utilizados a nivel interno.
+
+## Bloque 3
+
+La compañía está en constante expansión y es habitual que abra nuevas plantas a lo largo de mundo. Obviamente la empresa desea implantar el sistema de detección de fallos en estas nuevas fábricas lo más rápidamente posible.
+
+
+## Diapositiva 4 (Escenario II)
+
+### Bloque 1
+
+Hoy en día la mayoría de los componentes dentro de un entorno industrial están monitorizados mediante el uso de dispositivos de medición especializados. Por lo tanto, disponemos de una gran cantidad de datos de los sensores ubicados en las factorías.
+
+### Bloque 2
+
+Como disponemos de esa gran cantidad de datos sobre el funcionamiento de la instalaciones (recordar que los datos solo se pueden usar a nivel interno, solo a nivel local) es totalmente lógico que se opte por el uso de técnicas de Machine Learning para resolver el problema.
+
+### Bloque 3
+
+A pesar de poder aplicar técnicas de Machine Learning tradicional para resolver el problema a nivel local, es importante tener en cuenta que es imprescindible tratar el problema a nivel global por el siguiente motivo, la necesidad de una  implantación rápida del sistema de detección de fallos en las nuevas instalaciones. Abordando el problema de forma tradicional sería necesario repetir el proceso de la creación de modelos que se siguió en el resto de plantas, lo cual podría llevar meses o incluso años. Veremos como nos ayudará el uso del Federated Learning a la hora de crear modelos de calidad y cumplir todas las restricciones de privacidad y rápido despliegue.
+
+Pero antes de nada haremos una breve introducción tanto al Machine Learning como al Federated Learning.
+
+
+## Diapositiva 5 (Machine Learning I)
+
+### Bloque 1
+
 ¿Qué es el Machine Learning?
 
 El Machine Learning (aprendizaje automático) es un subcampo de la computación y una rama de la inteligencia artificial. Su  objetivo es crear programas (llamados comúnmente modelos) capaces de generalizar comportamientos a través de la información suministrada en forma de ejemplos.
@@ -48,7 +78,7 @@ El Machine Learning (aprendizaje automático) es un subcampo de la computación 
 Hoy en día el Machine Learning tiene una gran variedad de aplicaciones, entre las que se incluyen: motores de búsqueda, diagnóstico médico, detección de fraude en el uso de tarjetas de crédito, clasificación de secuencias de ADN, videojuegos, etc.
 
 
-## Diapositiva 5
+## Diapositiva 6 (Machine Learning II)
 
 Bien, ¿Y como funciona?
 
@@ -63,9 +93,10 @@ Cuando somos niños y vemos por primera vez un pez no reconoceremos el objeto po
 El aprendizaje automático funciona, en la mayoría de los casos, de forma análoga. Al modelo (nuestro cerebro) se le suministra un conjunto de datos etiquetados (pez o no pez) y el modelo “aprende” a reconocer patrones en los datos. Posteriormente ese modelo, gracias a la generalización, será capaz de reconocer peces cuando se los encuentre.
 
 
-## Diapositiva 6
+## Diapositiva 7 (Machine Learning III)
 
-¿Cómo se aplica el Machine Learning en la vida real?
+
+¿Cómo se aplica el Machine Learning?
 La construcción de un modelo de aprendizaje automático puede dividirse, a grandes rasgos, en tres etapas:
 
 ### Bloque 1
@@ -85,85 +116,13 @@ Etapa 3, validación del modelo. Esta es la etapa donde se "examina" el modelo c
 Es importante destacar que aunque estas fases se han presentado de manera secuencial no necesariamente se aplican de esa manera y es frecuente que se salte de una a otra dependiendo de las características del problema tratado.
 
 
-## Diapositiva 7
-
-__Situemos el contexto__ Caso de aplicación.
-
-Pasaremos a describir con detalle el escenario en el que nos encontramos: __decribir un posible escenario__
-
-### Bloque 1
-
-Una empresa multinacional dispone de plantas repartidas por todo el mundo. A pesar de pertenecer a la misma compañía cada una de las instalaciones tiene sus propias particularidades en cuanto al tipo de productos que producen, la manera de fabricarlos, etc. A estas diferencias se han de añadir también las condiciones ambientales de cada lugar: temperatura, humedad, presión atmosférica, etc. A pesar de estas diferencias, las máquinas utilizadas en todas las factorías son similares.
-
-La empresa desea implantar un sistema que pueda ayudar a detectar las posibles averías de las máquinas de sus factorías antes de que estas puedan provocar daños tanto al personal como a las propias instalaciones.
-
-
-
-
-## Bloque 2
-
-A pesar de pertenecer a la misma compañía, las plantas trabajan con un alto grado de independencia y de hecho, suelen competir entre ellas en cuestiones como la cantidad de producción, calidad, etc. Debido a esta competitividad, las factorías suelen ser reacias a compartir datos sobre sus técnicas de producción, las configuraciones de sus máquinas, etc. Esto implica que el acceso a sus datos está muy restringido y estos pueden ser únicamente utilizados a nivel interno. Esto motiva que la construcción de modelos de Machine Learning solo se pueda realizar a nivel local con los datos de cada factoría de forma independiente.
-
-
-## Bloque 3
-
-
-La compañía está en constante expansión y es habitual que abra nuevas plantas a lo largo de mundo. Obviamente la empresa desea implantar el sistema de detección de fallos que tan bien le ha funcionado en otras factorías. Pero hay un problema, en principio no se podría confiar en que el ninguno de los modelos locales existentes fuera de utilidad en estas nuevas instalaciones. Por lo que sería necesario recolectar datos de esta nueva factoría quizás durante meses o incluso años para poder crear un nuevo modelo local.
-
-La compañía considera esta tardanza inaceptable por lo que exige que diseñe un sistema que permita que las nuevas factorías se aprovechen de los modelos construidos previamente, sin tantas esperas.
-
-
-__PAra otro lado__
-
-Dado que todas las instalaciones están dotadas de sensores que capturan los datos operaciones de las máquinas se dispone de gran cantidad de datos sobre su funcionamiento. Por este motivo se ha optado por la utilización de técnicas de Machine Learning para tratar de resolver el problema.
-
-
-
-__TODO cambiar numero de diapositiva__
+## Diapositiva 8 (Federated Learning)
 
 
 
 
 
 
-
-## Diapositiva 9
-
-Hemos menciona en federated learning en múltiples ocasiones pero todavia no hemos explicado en que consiste por lo que vamos a ello
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Dipositiva X
-
-
-¿Cual es el plan?
-
-
-Para poder aplicar este tipo de técnicas los primero es recopilar datos sobre el comportamiento del fenómeno que pretendemos modelar.
-
-### Bloque 2
-
-Hoy en día la mayoría de los componentes dentro de un entorno industrial están monitorizados mediante el uso de dispositivos de medición especializados
-
-
-
-Para enseñar a distinguir a un modelo entre un comportamiento normal y otro anormal se necesitan datos, contra más datos, mejor.
-
-## Diapositiva  X2
-
-Pero,  ¿en que consiste el Federated learning?
-
-
-## Diapositiva 22
+## Diapositiva 21 (Gracias)
 
 Y aquí finaliza la presentación. Gracias por su atención.
