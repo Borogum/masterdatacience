@@ -2,14 +2,12 @@
 
 ## Diapositiva 1 (Introducción)
 
-Bienvenidos a la presentación del trabajo fin de master: "Detección de eventos anómalos en un entorno industrial mediante el uso de técnicas de Federated Learning" mi nombre es Darío Martín García Carretero.
-
-A lo largo de esta presentación se va mostrar una de las muchas aplicaciones del uso del aprendizaje federado. En este caso se utilizará como herramienta para la detección de eventos anómalos en un entorno industrial. Sin más preámbulos comencemos con la presentación.
+Bienvenidos a la presentación del trabajo fin de master: "Detección de eventos anómalos en un entorno industrial mediante el uso de técnicas de Federated Learning" mi nombre es Darío Martín García Carretero. A lo largo de esta presentación se va mostrar una de las muchas aplicaciones del uso del aprendizaje federado. En este caso se utilizará como herramienta para la detección de eventos anómalos en un entorno industrial. Sin más preámbulos comencemos con la presentación.
 
 
 ## Diapositiva 2 (Contexto y justificación)
 
-Primero comencemos situando el contexto y justificando la necesidad del trabajo.
+Empecemos situando el contexto y justificando la necesidad del trabajo.
 
 ### Bloque 1
 
@@ -25,21 +23,19 @@ En un entorno industrial, los eventos anómalos también pueden ser de muy diver
 
 Hay que tener en cuenta que estos fallos pueden provocar grandes daños económicos y personales. Por lo que su detección es algo muy importante que puede ayudar a prevenir situaciones irreversibles.
 
-Después de explicar el contexto y la justificación pasemos ahora a exponer el caso concreto que pretendemos resolver.
-
-
 ## Diapositiva 3 (Escenario I)
 
-Una empresa desea implantar un sistema que detecte las posibles averías de las máquinas de sus factorías antes de que estas puedan provocar daños tanto al personal como a las propias instalaciones.
+Una vez explicado el contexto y la justificación pasemos ahora a exponer un caso concreto de aplicación.
+
+Supongamos que una empresa desea implantar un sistema que detecte las posibles averías de las máquinas de sus factorías antes de que estas fallen y puedan provocar daños tanto al personal como a las propias instalaciones.
 
 ### Bloque 1
 
-La empresa dispone de plantas repartidas por todo el mundo. A pesar de pertenecer a la misma compañía cada una de las instalaciones tiene sus propias particularidades en cuanto al tipo de productos que fabrican, la manera de fabricarlos, etc. A estas diferencias se han de añadir también las condiciones ambientales de cada lugar: temperatura, humedad, presión atmosférica, etc. A pesar de estas diferencias, las máquinas utilizadas en todas las factorías son similares.
-
+Esta empresa dispone de plantas repartidas por todo el mundo. A pesar de pertenecer a la misma compañía cada una de las instalaciones tiene sus propias particularidades en cuanto al tipo de productos que fabrican, la manera de fabricarlos, etc. A estas diferencias se han de añadir también las condiciones ambientales de cada lugar: temperatura, humedad, presión atmosférica, etc. A pesar de estas diferencias, las máquinas utilizadas en todas las factorías son similares.
 
 ## Bloque 2
 
-A pesar de pertenecer a la misma compañía, las plantas trabajan con un alto grado de independencia y de hecho, suelen competir entre ellas en cuestiones como la cantidad de producción, calidad, etc. Debido a esta competitividad, las factorías son reacias a compartir datos sobre sus técnicas de producción, las configuraciones de sus máquinas, etc. Esto implica que el acceso a sus datos está muy restringido y estos pueden ser únicamente utilizados a nivel interno.
+Las plantas trabajan con un alto grado de independencia y de hecho, suelen competir entre ellas en cuestiones como la cantidad de producción, calidad, etc. Debido a esta competitividad, las factorías son reacias a compartir datos sobre sus técnicas de producción, las configuraciones de sus máquinas, etc. Esto implica que el acceso a sus datos está muy restringido y que estos únicamente pueden ser utilizados a nivel interno.
 
 ## Bloque 3
 
@@ -50,39 +46,39 @@ La compañía está en constante expansión y es habitual que abra nuevas planta
 
 ### Bloque 1
 
-Hoy en día la mayoría de los componentes dentro de un entorno industrial están monitorizados mediante el uso de dispositivos de medición especializados. Por lo tanto, disponemos de una gran cantidad de datos de los sensores ubicados en las factorías.
+Hoy en día la mayoría de los componentes dentro de un entorno industrial están monitorizados mediante el uso de dispositivos de medición especializados esta empresa no es una excepción y por lo tanto, podemos disponer de una gran cantidad de datos de los sensores ubicados en las factorías.
 
 ### Bloque 2
 
-Como disponemos de esa gran cantidad de datos sobre el funcionamiento de la instalaciones (recordar que los datos solo se pueden usar a nivel interno, solo a nivel local) es totalmente lógico que se opte por el uso de técnicas de Machine Learning para resolver el problema.
+Como disponemos de esa gran cantidad de datos sobre el funcionamiento de la instalaciones (recordar que los datos solo se pueden usar a nivel interno, es decir, de manera local) es totalmente lógico tratar de resolver el problema mediante el uso de técnicas de Machine Learning.
 
 ### Bloque 3
 
-A pesar de poder aplicar técnicas de Machine Learning tradicional para resolver el problema a nivel local, es importante tener en cuenta que es imprescindible tratar el problema a nivel global por el siguiente motivo, la necesidad de una  implantación rápida del sistema de detección de fallos en las nuevas instalaciones. Abordando el problema de forma tradicional sería necesario repetir el proceso de la creación de modelos que se siguió en el resto de plantas, lo cual podría llevar meses o incluso años. Veremos como nos ayudará el uso del Federated Learning a la hora de crear modelos de calidad y cumplir todas las restricciones de privacidad y rápido despliegue.
+A pesar de poder aplicar técnicas de Machine Learning tradicional para resolver el problema a nivel local, es importante darse cuenta cuenta que es imprescindible tratar el problema a nivel global por el siguiente motivo, la necesidad de una implantación rápida del sistema de detección de fallos en las nuevas instalaciones. Abordando el problema de forma tradicional tendríamos únicamente dos alternativas:
 
-Pero antes de nada haremos una breve introducción tanto al Machine Learning como al Federated Learning.
+* Repetir el proceso de la creación de modelos que se siguió en el resto de plantas. Esto podría llevar meses o incluso años, lo que va en contra del requerimiento de rápida implantación.
+
+* Juntar los datos de todas las plantas en un único lugar y construir un modelo con todos los datos. El problema es que esta aproximación violaría el requerimiento de privacidad de los datos.
+
+Por estos motivos se propone el uso del Federated Learning que permite crear modelos de gran calidad y cumplir con las restricciones de privacidad y rápido despliegue.
+
+Hemos mencionado conceptos como Machine Learning, modelo, Federated Learnign pero no hemos explicado en que consisten. En las siguientes diapositivas realizaremos una breve introducción de estos conceptos.
 
 
 ## Diapositiva 5 (Machine Learning I)
 
 ### Bloque 1
 
-¿Qué es el Machine Learning?
-
-El Machine Learning (aprendizaje automático) es un subcampo de la computación y una rama de la inteligencia artificial. Su  objetivo es crear programas (llamados comúnmente modelos) capaces de generalizar comportamientos a través de la información suministrada en forma de ejemplos.
+¿Qué es el Machine Learning? El Machine Learning (en español, aprendizaje automático) es un subcampo de la computación y una rama de la inteligencia artificial. Su objetivo es crear programas (llamados comúnmente modelos) capaces de generalizar comportamientos a través de la información suministrada en forma de ejemplos (también llamados instancias).
 
 ### Bloque 2
 
-¿Qué puede hacer por nosotros?,  ¿Qué aplicaciones tiene?
-
-Hoy en día el Machine Learning tiene una gran variedad de aplicaciones, entre las que se incluyen: motores de búsqueda, diagnóstico médico, detección de fraude en el uso de tarjetas de crédito, clasificación de secuencias de ADN, videojuegos, etc.
+¿Qué puede hacer por nosotros?, ¿Qué aplicaciones tiene? Hoy en día el Machine Learning tiene una gran variedad de aplicaciones, entre las que se incluyen: motores de búsqueda, diagnóstico médico, detección de fraude en el uso de tarjetas de crédito, clasificación de secuencias de ADN, videojuegos, etc.
 
 
 ## Diapositiva 6 (Machine Learning II)
 
-Bien, ¿Y como funciona?
-
-Para explicarlo de una manera sencilla estableceremos una analogía entre nuestro cerebro y un modelo de Machine Learning mediante un simple ejemplo:
+Bien, ¿Y como funciona? Para explicarlo de una manera sencilla estableceremos una analogía entre nuestro cerebro y un modelo de Machine Learning mediante un simple ejemplo:
 
 ### Bloque 1
 
@@ -90,18 +86,16 @@ Cuando somos niños y vemos por primera vez un pez no reconoceremos el objeto po
 
 ### Bloque 2
 
-El aprendizaje automático funciona, en la mayoría de los casos, de forma análoga. Al modelo (nuestro cerebro) se le suministra un conjunto de datos etiquetados (pez o no pez) y el modelo “aprende” a reconocer patrones en los datos. Posteriormente ese modelo, gracias a la generalización, será capaz de reconocer peces cuando se los encuentre.
+El aprendizaje automático funciona, en la mayoría de los casos, de forma análoga. Al modelo (nuestro cerebro) se le suministra un conjunto de datos etiquetados (pez o no pez) y el modelo “aprende” a reconocer patrones en los datos. Posteriormente ese modelo, gracias a la generalización, será capaz de reconocer peces cuando los vea.
 
 
 ## Diapositiva 7 (Machine Learning III)
 
-
-¿Cómo se aplica el Machine Learning?
-La construcción de un modelo de aprendizaje automático puede dividirse, a grandes rasgos, en tres etapas:
+¿Cómo se aplica el Machine Learning? La construcción de un modelo de aprendizaje automático puede dividirse, a grandes rasgos, en tres etapas:
 
 ### Bloque 1
 
-Etapa 1, adquisición y preparación de los datos. Como ya se menciono anteriormente, los modelos aprenden mediante el uso de ejemplos etiquetados. Es en esta etapa donde se obtienen estos ejemplos. Las fuentes pueden ser variadas y dependen del escenario en el que estemos trabajando. Por ejemplo, en nuestro caso, los datos provendrán de dispositivos instalados con el objetivo de monitorizar el comportamiento de las máquinas y de los registros de mantenimiento de dichas máquinas. Esta parte se correspondería con la parte de adquisición. En muchos casos, los datos no están en un formato adecuado y es por eso que tienen que ser procesados para darles la estructura adecuada para poder entrenar a los modelos. Esta sería la parte de la preparación.
+Etapa 1, adquisición y preparación de los datos. Como ya se menciono, los modelos aprenden mediante el uso de ejemplos etiquetados. Es, en esta etapa, donde se obtienen estos ejemplos. Las fuentes pueden ser variadas y dependen del escenario en el que estemos trabajando. Por ejemplo, en nuestro caso, los datos provendrían de dispositivos ubicados en las factorías con el objetivo de monitorizar el comportamiento de las máquinas por un lado y, de los registros de mantenimiento de dichas máquinas por otro lado. Esta parte se correspondería con la parte de adquisición. En muchos casos, los datos capturados no están en un formato adecuado y tienen que ser procesados para darles la estructura adecuada para poder entrenar a los modelos. Esta sería la parte de que se encargaría la preparación de los datos.
 
 ### Bloque 2
 
@@ -113,142 +107,122 @@ Etapa 3, validación del modelo. Esta es la etapa donde se "examina" el modelo c
 
 ### Bloque 4
 
-Es importante destacar que aunque estas fases se han presentado de manera secuencial no necesariamente se aplican de esa manera y es frecuente que se salte de una a otra dependiendo de las características del problema tratado.
+Es importante destacar que, aunque estas fases se han presentado de manera secuencial, no necesariamente se aplican de esa manera y es habitual que se salte de una a otra dependiendo de las características del problema tratado.
 
 
 ## Diapositiva 8 (Federated Learning)
 
-Pasemos a explicar en que consiste el aprendizaje federado.
-
-El aprendizaje federado es una técnica de aprendizaje automático que entrena un algoritmo a través de múltiples dispositivos o servidores sin intercambiar datos entre ellos. Este proceso se divide en 4 fases:
+Veamos ahora en que consiste el Federated Learning (aprendizaje federado en español). El aprendizaje federado es una técnica de aprendizaje automático que entrena un algoritmo a través de múltiples dispositivos o servidores sin intercambiar datos entre ellos. Este proceso se divide en 4 fases:
 
 ### Bloque 1
 
-El servidor central elige el tipo de modelo a entrenar
+El servidor central elige el tipo de modelo a entrenar, en principio podrías ser cualquier tipo de modelo basado en la optimización de parámetros, en nuestro caso se usará una red neuronal.
 
 ### Bloque 2
 
-El servidor central transmite el modelo a los nodos
+El servidor central transmite el modelo al resto de participantes (nodos).
 
 ### Bloque 3
 
-Los nodos entrenan el modelo de forma local con sus propios datos
+Los nodos entrenan el modelo de forma local con sus propios datos.
 
 ### Bloque 4
 
-El servidor central solicita los modelos locales y a partir de ellos genera otro modelo si acceder a ningún dato
+El servidor central solicita los modelos locales y a partir de ellos genera otro modelo si acceder a ningún dato.
 
-Todo este proceso se repite (se llaman rondas) hasta que se cumpla la condición de parada, que puede estar basada   en un criterio de calidad o en un número máximo de iteraciones.
+Una ciclo completo se denomina ronda. Todo este proceso se repetirá hasta que se cumpla la condición de parada establecida, que puede estar basada en un criterio de calidad o en un número máximo de iteraciones.
 
 
 ## Diapositiva 9 (Diseño del experimento I)
 
-__¿Como podemos comprobar que el método es aplicable?__
- es dec8ir, que es mejor que la de sus alternativas <------====
+Para mostrar que la aplicación del Federated Learning es una solución que puede ofrece unos buenos resultados compararemos sus resultados con los dos alternativas:
 
-PAra ver la efectividad de la aplicación compararemos su desempeño con dos alternativas una viable, que seria la de compartir los modelos entre distintas plantas
+* La primera sería que cada factoría pudiese construir su propio modelo local. Sabemos que esta alternativa no es viable pero nos dará una cota superior de la calidad de los modelos que es posible construir.
 
-y la otra que sería la de entrenar los modelos comparar con el caso mas favorable que cada fectorái pudiese tener su propio modelo entrenado con sus propios datos.
+* La segunda, basada en la intercambiabilidad de los modelos. Es decir, que un modelo entrenado en una planta pueda ser utilizado en otra sin falta de ser reentrenado. Notar que esta alternativa si que cumpliría con los requisitos establecidos de velocidad de implantación y privacidad.  
 
-
-El objetivo del trabajo es mostrar la posible aplicación del aprendizaje automático federado en la detección de potenciales fallos en máquinas dentro de un conglomerado de entornos industriales monitorizados. Este tipo de entornos monitorizados hoy en día están muy extendidos gracias al auge de la Industria 4.0 y la implementación de dispositivos IoT (Internet of Things) en las fábricas. Sin embargo, es prácticamente imposible obtener un conjunto de datos real por ser este tipo de datos muy sensible para las compañías. Por este motivo no se utilizarán datos reales y en su lugar, se desarrollará un software que nos permitirá la simulación de estos datos.
+Para poner a prueba las tres alternativas ...
 
 ### Bloque 1
 
-Se generarán 4 datasets simulados con diferentes condiciones ambientales y de funcionamiento. Para ello se utilizarán un conjunto de scripts creados para tal fin.
+Se generarán cuatro conjuntos de datos simulados con diferentes condiciones ambientales y de funcionamiento. Estos datos contendrán tanto, de información de los sensores instalados en las máquinas como de los datos de los informes de mantenimiento.
 
 ### Bloque 2
 
-De esos conjuntos se elegirá uno y con estos datos se construirá un modelo. Este modelo será el modelo base para todos los demás conjuntos de datos. Notar que lo que nos interesa es la estructura del modelo y no el valor de sus parámetros.
+De esos conjuntos se elegirá uno (que denominaremos Piloto) y con estos datos se construirá un modelo. Este modelo será el modelo base común para todos los demás conjuntos de datos. Notar que lo que nos interesa es la estructura del modelo y no el valor de sus parámetros.
 
 ### Bloque 3
 
-Después se entrenará un modelo (con la estructura definida en el paso anterior) por cada uno de los conjuntos de datos y 	se evaluarán los modelos obtenidos.
-
-Esto nos dará la base de comparación ya que nos proporcionará una cota máxima del rendimiento que podríamos esperar.
-
-Esta es la parte que concierne al entrenamiento de modelos de modo local
-
+Después se entrenará un modelo (con la estructura definida en el paso anterior) por cada uno de los conjuntos de datos y se evaluarán los modelos obtenidos. Esto nos dará unos la base de comparación ya que nos proporcionará una cota máxima del rendimiento que podríamos esperar.
+Hasta aquí la parte que concierne al entrenamiento de modelos de modo local.
 
 
 ## Diapositiva 10 (Diseño del experimento II)
 
-Esta parte del experimento es la que concierne a la aplicación del aprendizaje federado y consta de las siguientes fases / partes?¿
+La parte del experimento que concierne a la aplicación del aprendizaje federado y consta de las siguientes fases ...
 
 ### Bloque 1
 
-A continuación se elegirán 3 de los 4 conjuntos de datos y se entrenará un modelo federado.
-
+Se entrenará un modelo federado con tres de los cuatro conjuntos de datos. En esos tres se incluirá el conjunto de datos llamado Piloto. Los otros dos conjuntos pasarán a denominarse A y B.
 
 ### Bloque 2
 
--	Compararemos el modelo federado global con cada uno de los modelos locales para comparar los rendimientos.
-lo cual (incluye la intercambiabilidad entre estos)
-
+Se compararán los resultados del modelo federado global con cada uno de los modelos locales de los conjuntos de datos que han participado en la federación. Es decir con los conjuntos Piloto, A y B.
 
 ### Bloque 3
 
-Evaluaremos todas las compararemos los resultados y veremos si la palicación en una buena opcioón que además cumple con los requisitos
+Se evaluará el rendimiento del modelo federado con respecto al modelo local del conjunto de datos excluido de la federación (este conjunto se pasará a denominar N (letra inicial de New))
 
+Una vez examinadas todos los resultados no será posible evaluar la idoneidad del uso del aprendizaje federado frente a su alternativa, la intercambiabilidad de los modelos.
 
 
 ## Diapositiva 11 (Tecnologías)
 
-Para la implementación de todas la herramientas utilizadas en este trabajo ha sido necesario de multitud de tecnologías. Todas ellas tienen como nexo de unión el lenguaje de programación Python.
+Para la implementación de todas las herramientas y  modelos desarrollados para este trabajo ha sido necesario el uso de multitud de tecnologías. Todas ellas tienen como nexo de unión el lenguaje de programación Python.
 
 ### Bloque 1
 
- Se ha elegido este lenguaje por diversos motivos:
+¿Por qué usar Python? Se ha elegido este lenguaje por diversos motivos:
 
-* Simplicidad. Python ofrece la posibilidad de desarrollar programas muy potentes con muy pocas de líneas de código. Identifica y asocia automáticamente los tipos de datos y, en general, resulta un lenguaje fácil de usar y no se requiere mucho tiempo de codificación.
+* Simplicidad. Python ofrece la posibilidad de desarrollar programas muy potentes con muy pocas de líneas de código. En general, resulta un lenguaje fácil de usar y no se requiere mucho tiempo de codificación.
 
 * Compatibilidad. Muchas de las tecnologías actuales relacionadas con el Machine Learning están pensadas para ser utilizadas con este lenguaje.
 
-* Facilidad de aprendizaje. En comparación con otros lenguajes, Python es fácil de aprender incluso para los programadores con menos experiencia
+* Facilidad de aprendizaje. En comparación con otros lenguajes, Python es fácil de aprender incluso para los programadores con menos experiencia.
 
 ### Bloque 2
 
-Todos los scripts han sido desarrollados en un Entorno de desarrollo intregrado PyCharm. Este entorno especificamente diseñao para Python oferece herramientas muy útilies como análisis de código fuente, control de versines, etc.
+Todos los scripts han sido desarrollados en el Entorno de Desarrollo Integrado "PyCharm". Este entorno, específicamente diseñado para Python ofrece herramientas muy útiles como por ejemplo, análisis de código fuente y control de versiones.
 
 ### Bloque 3
 
-Pandas, Pandas es un libreria de para el lenguaje Python que permite la manipulación de datos y su análisis
+Pandas, Pandas es una librería de para el lenguaje Python que permite la manipulación de datos y su análisis de una manera sencilla y eficiente.
 
 
 ### Bloque 4
 
-Esta libreria también para el lenguaje de progarmación python permite realizar visualización de gran calidad de forma sencilla
-
+Matplotlib, esta potente librería también para el lenguaje de programación Python permite realizar visualizaciones de gran calidad de una forma muy sencilla.
 
 ### Bloque 5
 
-Scikit- learn es una libreria para el uso de machine learning contiene diferenttes tipos de modelos y su evaluación unque no ha sido la libreria que se ha utilizado para la creación de los modelos si que se han utlizado varia de utilizaddes sobre todo las de evaluación de los modelos
-
+scikit-learn, es una librería especializada para el uso de Machine Learning para Python. Contiene multitud de implementaciones de diferentes tipos de modelos. Aunque no ha sido la librería que se ha utilizado para la creación de los modelos, si que se han utilizado para la evaluación de los modelos construidos con ...
 
 ### Bloque 6
 
-PyTorch es una librería desarrollada principalmente por Facebook, de coódigo abierto y que permite desarrolla
-modelos de redes nueronales profundas.
-
+... PyTorch, librería desarrollada principalmente por Facebook, de código abierto y que permite desarrolla modelos de redes neuronales profundas de una manera rápida y eficiente.
 
 ### Bloque 7
 
-
-PySyft es una biblioteca de Python para el aprendizaje profundo seguro y privado. PySyft desacopla los datos privados del entrenamiento del modelo, utilizando el aprendizaje federado. Esta librería es compatible con múltiples frameworks entre los que se incluyen TensorFlow y PyTorch.
+Y por último pero no menos importante PySyft. PySyft es una biblioteca de Python para el aprendizaje profundo seguro y privado. PySyft permite desacoplar los datos privados del entrenamiento del modelo, utilizando el aprendizaje federado. Esta librería es compatible con múltiples frameworks entre los que se incluyen TensorFlow y PyTorch.
 
 
 ## Diapositiva 12 (Simulación de un entorno industrial)
 
-
-como se menciono en el desrrolo de del experi
-
-
+Para el entrenamiento de los modelos necesitamos datos. Sin embargo, es prácticamente imposible obtener un conjunto de datos real por ser este tipo de datos muy sensible para las compañías. Por este motivo no se utilizarán datos reales y en su lugar, se desarrollará un software que nos permitirá la simulación de estos datos.
 
 ### Bloque 1
 
-
-El objetivo es implementar un software para la simulación de un entorno industrial cuyas instalaciones se encuentran monitorizadas mediante dispositivos IoT. Debido a las características únicas de cada tipo de instalación no nos es posible construir un software que simule cada una de las diferentes máquinas que pudieran existir en dicho entorno industrial. Por lo tanto, consideraremos únicamente un tipo de máquina: máquinas rotatorias genéricas.
-
+Debido a las características únicas de cada tipo de instalación no nos es posible construir un software que simule cada una de las diferentes máquinas que pudieran existir en un entorno industrial. Por lo tanto, consideraremos únicamente un tipo de máquina: máquinas rotatorias genéricas.
 
 ### Bloque 2
 
