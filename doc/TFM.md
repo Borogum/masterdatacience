@@ -218,128 +218,109 @@ Y por último pero no menos importante PySyft. PySyft es una biblioteca de Pytho
 
 ## Diapositiva 12 (Simulación de un entorno industrial)
 
-Para el entrenamiento de los modelos necesitamos datos. Sin embargo, es prácticamente imposible obtener un conjunto de datos real por ser este tipo de datos muy sensible para las compañías. Por este motivo no se utilizarán datos reales y en su lugar, se desarrollará un software que nos permitirá la simulación de estos datos.
+Para el entrenamiento de los modelos necesitamos datos. Sin embargo, es prácticamente imposible obtener un conjunto de datos real por ser este tipo de información muy sensible para las compañías. Por este motivo no se utilizarán datos reales y en su lugar, se desarrollará un software que nos permitirá la simulación de estos datos.
 
 ### Bloque 1
 
-Debido a las características únicas de cada tipo de instalación no nos es posible construir un software que simule cada una de las diferentes máquinas que pudieran existir en un entorno industrial. Por lo tanto, consideraremos únicamente un tipo de máquina: máquinas rotatorias genéricas.
+Por cuestiones fáciles de entender no nos es posible construir un software que simule cada una de las diferentes máquinas que pudieran existir en un entorno industrial. Por lo tanto, en este trabajo, vamos considerar únicamente un tipo de máquina: máquinas rotatorias de uso genérico.
 
 ### Bloque 2
 
-Basándonos en conjuntos de datos ya existentes (por ejemplo, Turbofan Engine Degradation Simulation Data Set) para cada máquina se estudiarán las siguientes variables operacionales :
+Basándonos en conjuntos de datos de estudios previos para cada máquina se generarán las siguientes variables operacionales:
 
-•	Velocidad rotacional
-•	Temperatura
-•	Presión
+-	Velocidad rotacional
+-	Temperatura
+-	Presión
 
-Ademas como consideramos muy importante condiciones ambientales, la presion y la Temperatura
-
+Además, también se almacenarán datos sobre las condiciones climáticas. En nuestro caso presión y temperatura atmosférica.
 
 ### Bloque 3
 
-Esta incorparados el desgate que influye en la mediciones reaza
+También se simulara el desgaste propio del uso de las máquinas. Eso implica que, una vez lleguen al final de su vida útil, estas se estropearán. Cuando una máquina se estropee se almacenará un registro en un diario de mantenimiento tanto de cuando se produjo la avería como de cuando se realizó la reparación. Nuestras máquinas podrán fallar por dos motivos y el modelo se construirá para ser capaz de detectar el tipo de fallo.
 
 
+## Diapositiva 13 (Medidas de calidad para los modelos)
 
-Adicionalmente a la simulación de se simularan también el desgaste
+Antes de explicar como se ha construido el modelo es importante hacer un pequeño inciso para hablar sobre las medidas de calidad de los modelos.
 
-una vez que se llegan final de la vida util la maquina se estroperá y se ceraá un registro del mantenimiento, en nuestro caso una máquina puede
+Es muy importante seleccionar la medida de evaluación del modelo correcta para cada tipo de problema. Por ejemplo, un clásico error es considerar la medida "accuracy" (número de casos correctamente clasificados entre número total de casos) para problemas desbalanceados donde, un numero cercano al 1 (valor máximo) no indica en ningún caso que el modelo sea bueno ya que un modelo degenerado, cuya salida sea siempre la clase mayoritaria ofrecerá valores altos para esta medida lo cual no significará en ningún caso que este sea un
+buen modelo.
 
-fallar por dos motivo defiertens  y asu vez se registrará qur tipo de error se produjo
-
-
-## Diapositiva 13 (Construcción del Modelo Base)
-
-Siguinedo la planificación descrita en la en el diseño del experimento se ha creado un modelo local explicaremos a conitnuación al creación del modelo
-
-local
-
-
-
-Recordemos nuevamente nuestro objetivo, El objetivo es poder decidir si en un determinado momento una máquina está en riesgo de rotura o no utilizando únicamente sus datos telemétricos. Dicho de otra manera, se debe clasificar esa máquina como potencialmente peligrosa o como segura. Teniendo en cuenta esto parece claro que será necesario el uso de un modelo de clasificación.
-
-
-Del total de los cuatro  conjunto de datos de datos simulados vamo a seleccionar un para el diseño, notar que lo que nos importa ahora no son los parámetros de entrenamiento del modelo sino que solo resulta relevante su estructrura
-
+Aunque existen muchas más en esta presentación hablaremos únicamente de las medidas que usaremos de aquí en adelante.
 
 ### Bloque 1
 
-Como ya se en la transparencia Ml: ¿Como funciona?
+Precision, esta medida responde a la siguiente pregunta ¿Qué proporción de instancias clasificadas como “X” son realmente “X”? Se busca maximizar esta medida cuando queremos estar muy seguros de nuestra predicción.
 
-
-Se ha procedido a la preparación de los datos para la tarea de clasificación. Podemos dividir esta preparación en 4 fases:
-
-* Agregación:
-
-Muchas máquinas del mundo real funcionan en ciclos. Un ciclo puede considerarse como un período temporal que describe un estado de funcionamiento de una máquina. Por ejemplo, la operación de un motor en un avión puede describirse por los ciclos: motor en funcionamiento (avión en vuelo) o motor apagado (avión en tierra).
-
-Las transmisiones de telemetría sin procesar, si bien pueden ser muy útiles para tareas como el monitoreo en tiempo real, pueden causar problemas a la hora de construir modelos de detección de fallos. Es frecuente que en entornos no controlados (como puede ser una fábrica) los datos no sean del todo precisos. Para mitigar los posibles errores en las mediciones (fallos puntuales en los equipos de medida, ruido, etc.) que pueden afectar a la calidad de los modelos construidos, suele ser una buena opción considerar datos agregados por ciclo
-
-* Etiquetado:
-
-Gracias a los datos de mantenimiento podemos saber cuando una máquina ha fallado, ese registro será etiquetado como fallo (la etiqueta depende del tipo de fallo recodermos que teniamos dos tipo de  fallo). Como es interesante detectar el fallo antes de que se produzca se etiquerant tambien como fallos n  registros anteriores al fallo real  (en nuestro trabajo hemos utilizado 7 )
-
-
-* Enriquecimiento:
-
-
-Una forma de añadir mayor cantidad de información al conjunto de datos disponible es lo que se conoce como feature engineering (ingeniería de características). La ingeniería de características consiste en la creación de nuevos atributos a partir de los ya existentes. En muchos casos este tipo de procedimientos mejora notablemente la calidad de los modelos obtenidos.
-
-Aquí se añadirán cuatro nuevos atributos. Cada nuevo atributo se corresponderá con los datos promediados de cierto atributo de las n instancias  precedentes (nosotros hemos seleccionado como n = 5 ).
-
-Este procedimiento es muy interesante ya que permite añadir una cierta cantidad información histórica a cada registro. El modelo podrá, no solo tener información instantánea si no que tendrá también información sobre la tendencia.
-
-
-
-* Balanceo:
-
-Por la propia naturaleza de los datos que estamos manejando es normal que exista una gran diferencia en número entre los casos donde no se detecta ninguna anomalía (clase 0) y los casos donde es posible que se produzca una avería (clase 1 o clase 2 ). Sin embargo, este tipo de conjuntos de datos suelen ser problemáticos a la hora de entrenar los modelos. Existen multitud de técnicas para balancear conjuntos de datos: oversampling, subsampling, métodos basados en pesos, etc. [17]
-
-Se ha decidido hacer uso del algoritmo SMOTE (Synthetic Minority Over-sampling Technique) [18]. Este algoritmo genera nuevas instancias a partir de las clases minoritarias dejando intacta la clase mayoritaria. Las nuevas instancias no son copias de los casos existentes si no que se calculan como combinaciones lineales de los vecinos más cercanos de esa misma clase.
+En nuestro caso la maximización de esta medida nos ayudaría a estar seguros de que un error se va a producir con un alto grado de certeza, esto ahorraría dinero a la empresa ya que solo se harían mantenimientos cuando fueran estrictamente necesarios, el problema con esta medida es que podríamos dejar pasar fallos de los que no estamos seguros y que potencialmente representarían un peligro para la seguridad de la instalación
 
 ### Bloque 2
-
-Existen multitud de familias de modelos que pueden ser usados para tareas de clasificación: árboles de decisión, máquinas de soporte de vectores, k-vecinos más cercanos, etc. Sin embargo nos hemos decidido por el uso de redes neuronales. Esta elección está motivada principalmente por dos cuestiones:
-
-
--	Las redes neuronales han demostrado tener un rendimiento excelente en multitud de problemas.
-
--	Aunque en teoría el uso del Federated Learning es aplicable a cualquier tipo de modelo cuyo entrenamiento se base en la optimización de parámetros [15] , es cierto que al ser una tecnología relativamente nueva la mayoría de los frameworks actuales solo permiten el uso de redes neurales en sus implementaciones de aprendizaje federado.
-
-
-### Bloque 3
-
-Es muy impontabte seleccionar la medida correcta para el problema correcto. Un clásico error es considerar la medida Accuracy para problemas desbalanceados donde, un numero cercano al 1 (valor máximo) no indica en ningun caso un buen modelo
-
-## Diapositiva 14 (medidas de calidad del modelo)
-
-
-Es siguiente paso ha sido evaluar la calidad del modelo.
-
-
- Se ha tenido en cuenta tres medidas: precision, recall, f1-score
-
-### Bloque 1
-
-Esta medida responde a la siguiente pregunta ¿Qué proporción de instancias clasificadas como “X” son realmente “X”? Se busca maximizar esta medida cuando queremos estar muy seguros de nuestra predicción.
-
-En nuestro la maximación de esta medida no ayudaría a estar seguros de que un error se va aproducir  esto ahorraria  dinero a la empresa ya que solo se harian mantenimientos cuando fueran necesdarios, el problema con esto es que podríamos dejar pasar fallos de los que no estamos seguros pero que se p roduccen esto puede representar un peligro en la segurirdad de la instalación
-
-
-### Bloque 2
-
 
 El recall responde a la siguiente pregunta ¿De todas las instancias “X” que existen, qué proporción han sido clasificadas como “X”? Se busca maximizar esta medida cuando queremos capturar la mayor cantidad de clases “X” posible.
 
-
-La maximación de este esta medida es equivalente a la maximización de la segridad ya que nos garantiza que todos los casos en los que se produce seran detectados sin embargo esto puede ocasionar falsos positivos lo que desembocaría en un aumento en los costes de mantenimiento
+La maximización de esta medida es equivalente a la maximización de la seguridad en la instalación ya que nos garantiza que todos los casos en los que se produzca un fallo serán detectados. Esto tiene su contrapartida ya que esto puede ocasionar falsos positivos lo que desembocaría en un aumento en los costes de mantenimiento
 
 ### Bloque 3
 
-Aunque obviamente la seguridad siempre debe ser lo primero es interesante establecer un balance (comrpomiso) de las dos medidas para ello es muy  La medida f1-score que consiste en la media armonica de los dos anteriores
+Aunque obviamente la seguridad siempre debe ser lo primero, es necesario establecer un compromiso entre las dos medidas. Para evaluar este compromiso se utilizar la medida f1-score que consiste en la media armónica de los dos medidas anteriores.
+
+
+## Diapositiva 14 (Construcción del Modelo Base)
+
+Después de este pequeño inciso pasemos a describir la construcción del modelo base.
+
+Recordemos que el objetivo es poder decidir si en un determinado momento una máquina está en riesgo de rotura o no utilizando únicamente sus datos telemétricos. Dicho de otra manera, se debe clasificar esa máquina como potencialmente peligrosa o como segura. Teniendo en cuenta esto parece claro que será necesario el uso de un modelo de clasificación.
+
+¿Cómo hemos construido el modelo?
+
+### Bloque 1
+
+Primeramente se ha procedido a la preparación de los datos para la tarea de clasificación. Esta preparación la podemos dividir en 4 fases:
+
+__Agregación__
+
+Muchas máquinas del mundo real funcionan en ciclos. Un ciclo puede considerarse como un período temporal que describe un estado de funcionamiento de una máquina. Por ejemplo, la operación de un motor en un avión puede describirse por los ciclos: motor en funcionamiento (avión en vuelo) o motor apagado (avión en tierra).
+
+Las transmisiones de telemetría sin procesar, si bien pueden ser muy útiles para tareas como el monitoreo en tiempo real, pueden causar problemas a la hora de construir modelos de detección de fallos. Es frecuente que en entornos no controlados (como puede ser una fábrica) los datos no sean del todo precisos. Para mitigar los posibles errores en las mediciones (fallos puntuales en los equipos de medida, ruido, etc.) que pueden afectar a la calidad de los modelos construidos, suele ser una buena opción utilizar datos agregados por ciclo
+
+__Etiquetado__
+
+Gracias a los datos de mantenimiento podemos saber cuando una máquina ha fallado, por lo tanto, podemos   etiquetar el registro telemétrico en ese instante como un fallo (la etiqueta dependerá del tipo de fallo recordemos que podían ocurrir dos tipos de fallo). Como es interesante detectar el fallo antes de que se produzca, para tareas de mantenimiento preventivo, por ejemplo, se etiquetaran también como fallos los N  registros anteriores al fallo real (nosotros usaremos N = 7)
+
+__Enriquecimiento__
+
+Una forma de añadir mayor cantidad de información al conjunto de datos disponible es lo que se conoce como ingeniería de características. La ingeniería de características consiste en la creación de nuevos atributos a partir de los ya existentes. En muchos casos este tipo de procedimientos mejora notablemente la calidad de los modelos obtenidos.
+
+Aquí se añadirán los nuevos atributos basado en los atributos ya existentes. Cada nuevo atributo se corresponderá con los datos promediados de su atributo asociado en las N instancias precedentes (en nuestro caso  N será igual a 5).
+
+Este procedimiento es muy interesante ya que permite añadir una cierta cantidad información histórica a cada registro. El modelo podrá, no solo tener información instantánea si no que tendrá también información sobre la tendencia.
+
+__Balanceo__
+
+Por la propia naturaleza de los datos que estamos manejando es normal que exista una gran diferencia en número entre los casos donde no se detecta ninguna anomalía (clase 0) y los casos donde es posible que se produzca una avería (clase 1 o clase 2). Sin embargo, este tipo de conjuntos de datos suelen ser problemáticos a la hora de entrenar los modelos. Existen multitud de técnicas para balancear conjuntos de datos. Nosotros utilizaremos el algoritmo SMOTE. Este algoritmo permite generar nuevas instancias a partir de las clases minoritarias dejando intacta la clase mayoritaria. Las nuevas instancias no son copias de los casos existentes si no que se calculan como combinaciones lineales de los vecinos más cercanos de esa misma clase.
+
+### Bloque 2
+
+Hay muchas de familias de modelos que pueden ser usados para tareas de clasificación: árboles de decisión, máquinas de soporte de vectores, k-vecinos más cercanos, etc. Sin embargo nos hemos decidido por el uso de redes neuronales. Esta elección está motivada principalmente por dos cuestiones:
+
+-	Las redes neuronales han demostrado tener un rendimiento excelente en multitud de problemas.
+
+-	Aunque en teoría el uso del Federated Learning es aplicable a cualquier tipo de modelo cuyo entrenamiento se base en la optimización de parámetros, es cierto que al ser una tecnología relativamente nueva la mayoría de los frameworks actuales solo permiten el uso de redes neurales en sus implementaciones de aprendizaje federado.
+
+### Bloque 3
+
+Una vez elegido el tipo de modelo será necesario determinar su fisionomía (número de capas, neuronas por capa, etc.) entrenarlo y validarlo. Todas estas operaciones se llevarán a cabo siempre de acuerdo a las medidas de calidad enumeradas en la anterior transparencia.
+
+Es importante destacar que:
+
+1. El modelo ha sido construido únicamente con el conjunto de datos denominado "Piloto"
+2. Del modelo aquí construido solo no interesa su estructura no sus parámetros ya que el proceso de entrenamiento se llevará a cabo para cada conjunto de datos de forma individual.
+3. De aquí en adelante todos los modelo tendrán la misma estructura.
 
 
 ## Diapositiva 15 (Resultados del modelo base)
+
+**TODO**
 
 Ya disponemos de un modelo base construido a parater del conjunto de datos de la plnata pilito. Aplicaremos la estructura de este modelo en el resto de instalaciones (recoredad que esto no servira como cota máxima del rendimiento de las dos opciones  que barajamamos)  
 
