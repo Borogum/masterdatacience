@@ -133,7 +133,7 @@ Un ciclo completo se denomina ronda. Todo este proceso se repetirá hasta que se
 
 ## Diapositiva 9 (Diseño del experimento I)
 
-Para mostrar que la aplicación del Federated Learning es una solución que puede ofrecer unos buenos resultados compararemos sus resultados con las dos alternativas:
+Para mostrar que la aplicación del Federated Learning es una solución que puede ofrecer unos buenos resultados compararemos sus resultados con dos alternativas:
 
 * La primera sería que cada factoría pudiese construir su propio modelo local. Sabemos que esta alternativa no es viable pero nos dará una cota superior de la calidad de los modelos que es posible construir.
 
@@ -143,25 +143,27 @@ Para poner a prueba las tres alternativas ...
 
 ### Bloque 1
 
-Se generarán cuatro conjuntos de datos simulados con diferentes condiciones ambientales y de funcionamiento. Estos datos contendrán tanto, de información de los sensores instalados en las máquinas como de los datos de los informes de mantenimiento.
+Se generarán cuatro conjuntos de datos simulados con diferentes condiciones ambientales y de funcionamiento. Estos datos contendrán tanto, información de los sensores instalados en las máquinas como de los datos de los informes de mantenimiento.
 
 ### Bloque 2
 
-De esos conjuntos se elegirá uno (que denominaremos Piloto) y con estos datos se construirá un modelo. Este modelo será el modelo base común para todos los demás conjuntos de datos. Notar que lo que nos interesa es la estructura del modelo y no el valor de sus parámetros.
+De esos conjuntos se elegirá uno (que denominaremos Piloto) y con estos datos se construirá un modelo. Este modelo será el modelo base común para todos los demás conjuntos de datos. Notar, que solo nos interesa la estructura del modelo y no el valor de sus parámetros.
 
 ### Bloque 3
 
-Después se entrenará un modelo (con la estructura definida en el paso anterior) por cada uno de los conjuntos de datos y se evaluarán los modelos obtenidos. Esto nos dará unos la base de comparación ya que nos proporcionará una cota máxima del rendimiento que podríamos esperar.
+Se entrenará un modelo (con la estructura definida en el paso anterior) por cada uno de los conjuntos de datos y se evaluarán los modelos obtenidos. Esto nos dará unos la base de comparación ya que nos proporcionará una cota máxima del rendimiento que podríamos esperar.
+
 Hasta aquí la parte que concierne al entrenamiento de modelos de modo local.
 
 
 ## Diapositiva 10 (Diseño del experimento II)
 
-La parte del experimento que concierne a la aplicación del aprendizaje federado y consta de las siguientes fases ...
+En cuanto a la aplicación del aprendizaje federado ...
+
 
 ### Bloque 1
 
-Se entrenará un modelo federado con tres de los cuatro conjuntos de datos. En esos tres se incluirá el conjunto de datos llamado Piloto. Los otros dos conjuntos pasarán a denominarse A y B.
+Se entrenará un modelo federado con tres de los cuatro conjuntos de datos. En esos tres, estará el conjunto de datos llamado Piloto. Los otros dos datasets pasarán a denominarse A y B.
 
 ### Bloque 2
 
@@ -171,12 +173,12 @@ Se compararán los resultados del modelo federado global con cada uno de los mod
 
 Se evaluará el rendimiento del modelo federado con respecto al modelo local del conjunto de datos excluido de la federación (este conjunto se pasará a denominar N (letra inicial de New))
 
-Una vez examinadas todos los resultados no será posible evaluar la idoneidad del uso del aprendizaje federado frente a su alternativa, la intercambiabilidad de los modelos.
+Una vez examinadas todos los resultados nos será posible evaluar la idoneidad del uso del aprendizaje federado frente a su alternativa, la intercambiabilidad de los modelos.
 
 
 ## Diapositiva 11 (Tecnologías)
 
-Para la implementación de todas las herramientas y  modelos desarrollados para este trabajo ha sido necesario el uso de multitud de tecnologías. Todas ellas tienen como nexo el lenguaje de programación Python.
+Para la implementación de todas las herramientas y  modelos desarrollados en este trabajo ha sido necesario el uso de multitud de tecnologías. Todas ellas tienen como nexo el lenguaje de programación Python ...
 
 ### Bloque 1
 
@@ -190,7 +192,7 @@ Para la implementación de todas las herramientas y  modelos desarrollados para 
 
 ### Bloque 2
 
-Todos los scripts han sido desarrollados en el Entorno de Desarrollo Integrado "PyCharm". Este entorno, específicamente diseñado para Python ofrece herramientas muy útiles como por ejemplo, análisis de código fuente y control de versiones.
+Todos los scripts han sido desarrollados en el entorno de desarrollo integrado (IDE) "PyCharm". Este entorno, específicamente diseñado para Python ofrece herramientas muy útiles como por ejemplo, análisis de código fuente y control de versiones.
 
 ### Bloque 3
 
@@ -203,7 +205,7 @@ Matplotlib, esta potente librería también para el lenguaje de programación Py
 
 ### Bloque 5
 
-scikit-learn, es una librería especializada para el uso de Machine Learning para Python. Contiene multitud de implementaciones de diferentes tipos de modelos. Aunque no ha sido la librería que se ha utilizado para la creación de los modelos, sí que se han utilizado para la evaluación de los modelos construidos con ...
+scikit-learn, es una librería especializada en Machine Learning para Python y contiene multitud de implementaciones de diferentes tipos de modelos. Aunque no ha sido la librería que se ha utilizado para la creación de los modelos, se ha utilizado para la evaluación de los modelos que han sido  construidos con ...
 
 ### Bloque 6
 
@@ -216,11 +218,11 @@ Y por último pero no menos importante PySyft. PySyft es una biblioteca de Pytho
 
 ## Diapositiva 12 (Simulación de un entorno industrial)
 
-Para el entrenamiento de los modelos necesitamos datos. Sin embargo, es prácticamente imposible obtener un conjunto de datos real por ser este tipo de información muy sensible para las compañías. Por este motivo no se utilizarán datos reales y en su lugar, se desarrollará un software que nos permitirá la simulación de estos datos.
+Para el entrenamiento de los modelos necesitamos datos. Sin embargo, es prácticamente imposible obtener un conjunto de datos real por ser este tipo de información muy sensible para las compañías. Por este motivo no se utilizarán datos reales y en su lugar, se ha desarrollado un software que nos permitirá la simulación de estos datos.
 
 ### Bloque 1
 
-Por cuestiones fáciles de entender no nos es posible construir un software que simule cada una de las diferentes máquinas que pudieran existir en un entorno industrial. Por lo tanto, en este trabajo, vamos a considerar únicamente un tipo de máquina: máquinas rotatorias de uso genérico.
+Por cuestiones obvias no nos ha sido posible construir un software que simule cada una de las diferentes máquinas que pudieran existir en un entorno industrial. Por lo tanto, en este trabajo, vamos a considerar únicamente un tipo de máquina: máquinas rotatorias de uso genérico.
 
 ### Bloque 2
 
@@ -234,33 +236,32 @@ Además, también se almacenarán datos sobre las condiciones climáticas. En nu
 
 ### Bloque 3
 
-También se simulará el desgaste propio del uso de las máquinas. Eso implica que, una vez lleguen al final de su vida útil, estas se estropearán. Cuando una máquina se estropee se almacenará un registro en un diario de mantenimiento tanto de cuando se produjo la avería como de cuando se realizó la reparación. Nuestras máquinas podrán fallar por dos motivos y el modelo se construirá para ser capaz de detectar el tipo de fallo.
+También se simulará el desgaste propio del uso de las máquinas. Esto significa que, una vez lleguen al final de su vida útil, estas se estropearán. Cuando una máquina se estropee se almacenará un registro en un diario de mantenimiento tanto de cuando se produjo la avería como de cuando se realizó la reparación. Nuestras máquinas podrán fallar por dos motivos y el modelo se construirá para ser capaz de detectar el tipo de fallo.
 
 
 ## Diapositiva 13 (Medidas de calidad para los modelos)
 
 Antes de explicar cómo se ha construido el modelo es importante hacer un pequeño inciso para hablar sobre las medidas de calidad de los modelos.
 
-Es muy importante seleccionar la medida de evaluación adecuada para cada tipo de problema. Por ejemplo, un clásico error es considerar la medida "accuracy" (número de casos correctamente clasificados entre número total de casos) para problemas desbalanceados donde, un numero cercano al 1 (valor máximo) no indica en ningún caso que el modelo sea bueno ya que un modelo degenerado, cuya salida sea siempre la clase mayoritaria ofrecerá valores altos para esta medida lo cual no significará en ningún caso que este sea un
-buen modelo.
+Es crucial seleccionar la medida de evaluación adecuada para cada tipo de problema. Por ejemplo, un clásico error es considerar la medida "accuracy" (número de casos correctamente clasificados entre número total de casos) para problemas con conjuntos de datos desbalanceados donde, un numero cercano al 1 (valor máximo) no indica en ningún caso que el modelo sea bueno ya que, un modelo cuya salida sea siempre la clase mayoritaria. Este modelo ofrecerá valores altos "accuracy"  lo cual no significará en ningún caso que este sea un buen modelo.
 
-Aunque existen muchas más en esta presentación hablaremos únicamente de las medidas que usaremos de aquí en adelante.
+Aunque existen muchas más en esta presentación hablaremos únicamente de las medidas que usaremos en este trabajo.
 
 ### Bloque 1
 
-Precision, esta medida responde a la siguiente pregunta ¿Qué proporción de instancias clasificadas como “X” son realmente “X”? Se busca maximizar esta medida cuando queremos estar muy seguros de nuestra predicción.
+Precision, esta medida responde a la siguiente pregunta ¿Qué proporción de instancias clasificadas como "X" son realmente "X"? Se busca maximizar esta medida cuando queremos estar muy seguros de nuestra predicción.
 
-En nuestro caso la maximización de esta medida nos ayudaría a estar seguros de que un error se va a producir con un alto grado de certeza, esto ahorraría dinero a la empresa ya que solo se harían mantenimientos cuando fueran estrictamente necesarios, el problema con esta medida es que podríamos dejar pasar fallos de los que no estamos seguros y que potencialmente representarían un peligro para la seguridad de la instalación
+En nuestro caso la maximización de esta medida nos ayudaría a estar seguros de que un error se va a producir con un alto grado de certeza, esto ahorraría dinero a la empresa ya que solo se harían mantenimientos cuando fueran estrictamente necesarios, el problema con esto es que podríamos dejar pasar fallos de los que no estamos muy seguros y que potencialmente representarían un peligro para la seguridad de la instalación.
 
 ### Bloque 2
 
-El recall responde a la siguiente pregunta ¿De todas las instancias “X” que existen, qué proporción han sido clasificadas como “X”? Se busca maximizar esta medida cuando queremos capturar la mayor cantidad de clases “X” posible.
+Recall, esta medida responde a la siguiente pregunta ¿De todas las instancias "X" que existen, qué proporción han sido clasificadas como "X"? Se busca maximizar esta medida cuando queremos capturar la mayor cantidad de clases "X" posible.
 
-La maximización de esta medida es equivalente a la maximización de la seguridad en la instalación ya que nos garantiza que todos los casos en los que se produzca un fallo serán detectados. Esto tiene su contrapartida ya que esto puede ocasionar falsos positivos lo que desembocaría en un aumento en los costes de mantenimiento
+La maximización de esta medida es equivalente a la maximización de la seguridad en la instalación ya que nos garantiza que todos los casos en los que se produzca un fallo serán detectados. Esto tiene su contrapartida ya que esto puede ocasionar falsos positivos lo que desembocaría en un aumento en los costes de mantenimiento.
 
 ### Bloque 3
 
-Aunque obviamente la seguridad siempre debe ser lo primero, es necesario establecer un compromiso entre las dos medidas. Para evaluar este compromiso se utilizar la medida f1-score que consiste en la media armónica de las dos medidas anteriores.
+Aunque obviamente la seguridad siempre debe ser lo primero, es necesario establecer un compromiso entre las dos medidas. Para evaluar este compromiso se utiliza la medida f1-score, que consiste en la media armónica delas dos medidas anteriores.
 
 
 ## Diapositiva 14 (Construcción del Modelo Base)
@@ -273,23 +274,23 @@ Recordemos que el objetivo es poder decidir si en un determinado momento una má
 
 ### Bloque 1
 
-Primeramente se ha procedido a la preparación de los datos para la tarea de clasificación. Esta preparación la podemos dividir en 4 fases:
+Primero se ha procedido a la preparación de los datos para la tarea de clasificación. Esta preparación la podemos dividir en 4 fases:
 
 __Agregación__
 
 Muchas máquinas del mundo real funcionan en ciclos. Un ciclo puede considerarse como un período temporal que describe un estado de funcionamiento de una máquina. Por ejemplo, la operación de un motor en un avión puede describirse por los ciclos: motor en funcionamiento (avión en vuelo) o motor apagado (avión en tierra).
 
-Las transmisiones de telemetría sin procesar, si bien pueden ser muy útiles para tareas como el monitoreo en tiempo real, pueden causar problemas a la hora de construir modelos de detección de fallos. Es frecuente que en entornos no controlados (como puede ser una fábrica) los datos no sean del todo precisos. Para mitigar los posibles errores en las mediciones (fallos puntuales en los equipos de medida, ruido, etc.) que pueden afectar a la calidad de los modelos construidos, suele ser una buena opción utilizar datos agregados por ciclo
+Las transmisiones de telemetría sin procesar, si bien pueden ser muy útiles para tareas como el monitoreo en tiempo real, pueden causar problemas a la hora de construir modelos de detección de fallos. Es frecuente que en entornos no controlados (como puede ser una fábrica) los datos no sean del todo precisos. Para mitigar los posibles errores en las mediciones (fallos puntuales en los equipos de medida, ruido, etc.) que pueden afectar a la calidad de los modelos construidos, suele ser una buena opción utilizar datos agregados por ciclo. Las funciones de agregación que se han sido utilizadas han sido la media y el máximo.
 
 __Etiquetado__
 
-Gracias a los datos de mantenimiento podemos saber cuándo una máquina ha fallado, por lo tanto, podemos etiquetar el registro telemétrico en ese instante como un fallo (la etiqueta dependerá del tipo de fallo recordemos que podían ocurrir dos tipos de fallo). Como es interesante detectar el fallo antes de que se produzca, para tareas de mantenimiento preventivo, por ejemplo, se etiquetaran también como fallos los N  registros anteriores al fallo real (nosotros usaremos N = 7)
+Gracias a los datos de mantenimiento podemos saber cuándo una máquina ha fallado, por lo tanto, podemos etiquetar el registro telemétrico en ese instante como un fallo (la etiqueta dependerá del tipo de fallo recordemos que podían ocurrir dos tipos de fallo). Como es interesante detectar el fallo antes de que se produzca, para tareas de mantenimiento preventivo, por ejemplo, se etiquetaran también como fallos los N registros anteriores al fallo real (nosotros hemos usado N = 7)
 
 __Enriquecimiento__
 
 Una forma de añadir mayor cantidad de información al conjunto de datos disponible es lo que se conoce como ingeniería de características. La ingeniería de características consiste en la creación de nuevos atributos a partir de los ya existentes. En muchos casos este tipo de procedimientos mejora notablemente la calidad de los modelos obtenidos.
 
-Aquí se añadirán los nuevos atributos basado en los atributos ya existentes. Cada nuevo atributo se corresponderá con los datos promediados de su atributo asociado en las N instancias precedentes (en nuestro caso  N será igual a 5).
+Aquí se añadirán nuevos atributos basados en los atributos ya existentes. Cada nuevo atributo se corresponderá con los datos promediados de su atributo asociado en las N instancias precedentes (nosotros usaremos N = 5).
 
 Este procedimiento es muy interesante ya que permite añadir una cierta cantidad información histórica a cada registro. El modelo podrá, no solo tener información instantánea si no que tendrá también información sobre la tendencia.
 
@@ -299,42 +300,42 @@ Por la propia naturaleza de los datos que estamos manejando es normal que exista
 
 ### Bloque 2
 
-Hay muchas de familias de modelos que pueden ser usados para tareas de clasificación: árboles de decisión, máquinas de soporte de vectores, k-vecinos más cercanos, etc. Sin embargo nos hemos decidido por el uso de redes neuronales. Esta elección está motivada principalmente por dos cuestiones:
+Elección del modelo. Hay muchas de familias de modelos que pueden ser usados para tareas de clasificación: árboles de decisión, máquinas de soporte de vectores, k-vecinos más cercanos, etc. Sin embargo nos hemos decidido por el uso de redes neuronales. Esta elección está motivada principalmente por dos cuestiones:
 
--	Las redes neuronales han demostrado tener un rendimiento excelente en multitud de problemas.
+1.	Las redes neuronales han demostrado tener un rendimiento excelente en multitud de problemas.
 
--	Aunque en teoría el uso del Federated Learning es aplicable a cualquier tipo de modelo cuyo entrenamiento se base en la optimización de parámetros, es cierto que al ser una tecnología relativamente nueva la mayoría de los frameworks actuales solo permiten el uso de redes neurales en sus implementaciones de aprendizaje federado.
+2.	Aunque en teoría el uso del Federated Learning es aplicable a cualquier tipo de modelo cuyo entrenamiento se base en la optimización de parámetros, es cierto que al ser una tecnología relativamente nueva la mayoría de los frameworks actuales solo permiten el uso de redes neurales en sus implementaciones de aprendizaje federado.
 
 ### Bloque 3
 
-Una vez elegido el tipo de modelo será necesario determinar su fisionomía (número de capas, neuronas por capa, etc.) entrenarlo y validarlo. Todas estas operaciones se llevarán a cabo siempre de acuerdo a las medidas de calidad enumeradas en la anterior transparencia.
+Una vez elegido el tipo de modelo será necesario determinar su fisionomía (número de capas, neuronas por capa, etc.) entrenarlo y validarlo. Todas estas operaciones se han llevado a cabo siempre de acuerdo a las medidas de calidad mostradas en la anterior transparencia.
 
 Es importante destacar que:
 
 1. El modelo ha sido construido únicamente con el conjunto de datos denominado "Piloto"
 2. Del modelo aquí construido solo no interesa su estructura no sus parámetros ya que el proceso de entrenamiento se llevará a cabo para cada conjunto de datos de forma individual.
-3. De aquí en adelante todos los modelos tendrán la misma estructura y serán entrenados de la misma forma (hiperparámetros).
+3. De aquí en adelante todos los modelos tendrán la misma estructura y serán entrenados de la misma forma.
 
 
 ## Diapositiva 15 (Resultados del modelo base)
 
-Una vez que disponemos del modelo base, pasaremos a evaluar su rendimiento en los distintos conjuntos de datos de los que disponemos. Estos valores nos servirán como referencia a la hora de comparar las diferentes alternativas que se han propuesto como solución al problema.
+Una vez construido el modelo base, evaluamos su rendimiento en los distintos conjuntos de datos de los que disponíamos. Estos valores nos servirán como referencia a la hora de comparar las diferentes alternativas que se han propuesto como solución al problema.
 
-Se puede observar que todas las plantas arrojan valores similares en cuanto a la precision el recall y la f1-score, en torno a un 90, 95 y 94 por ciento respectivamente. En las plantas "Piloto" y "A" se observa una diferencia bastante significativa entre el recall y la precision mientras que en las otras dos: la Planta B y la Planta N los valores están más cercanos. Cabe destacar que los resultados obtenidos en la Planta N son los peores de entre los cuatro conjuntos.
+Se puede observar que todas las plantas arrojan valores similares en cuanto a: precision, recall y f1-score, en torno a un 90, 95 y 94 por ciento respectivamente. En las plantas "Piloto" y "A" se observa una diferencia bastante significativa entre el recall y la precision mientras que en las otras dos: la Planta B y la Planta N los valores están más cercanos. Cabe destacar que los resultados obtenidos en la Planta N son los peores de entre los cuatro datasets.
 
 
 ## Diapositiva 16 (Intercambiabilidad del modelo base)
 
-En la sección anterior se ha visto que se  puede esperar del modelo base si es entrenado de manera local. En esta diapositiva se pretende responder a la siguiente pregunta: ¿Funciona bien un modelo entrenado en una planta en otra sin necesidad de reentrenarlo? Para resolver esta duda presentamos a continuación una tabla comparativa del f1-score (media de todas las clases) sobre todas las posibles combinaciones train-test. La razón de elegir esta medida es por simplicidad, ya que con un único valor podemos hacernos una idea tanto de la precision como del recall.
+En la sección anterior se ha visto lo que se puede esperar del modelo base si es entrenado de manera local. En esta diapositiva se pretende responder a la siguiente pregunta: ¿Funciona bien un modelo entrenado en una planta en otra sin necesidad de reentrenarlo? Para resolver esta duda presentamos a continuación una tabla comparativa del f1-score (media de todas las clases) sobre todas las posibles combinaciones train-test. La razón de elegir esta medida es por simplicidad, ya que con un único valor podemos hacernos una idea tanto de la precision como del recall.
 
-Observando la tabla podemos ver que por norma general el modelo entrenado de forma específica (diagonal) supera ampliamente en rendimiento a los entrenados en otras instalaciones. Es destacable el caso de la instalación “N” en la que para algunos casos el score es mucho mejor que para su propio conjunto de entrenamiento. El motivo seguramente guarde relación con el hecho de que el número de rondas de entrenamiento no fuera lo suficientemente alto. Aunque este hecho aislado de tener puntuaciones similares con modelos ajenos fuera generalizado existiría otro problema, ¿Cómo saber a priori que modelo de todos de los que se dispone es mejor para la planta objetivo?
+Observando la tabla podemos ver que por norma general el modelo entrenado de forma específica (diagonal) supera ampliamente en rendimiento a los entrenados en otras instalaciones. Es destacable el caso de la instalación “N” en la que para algunos casos el score es mucho mejor que para su propio conjunto de entrenamiento. El motivo seguramente guarde relación con el hecho de que el número de rondas de entrenamiento no fuera lo suficientemente alto. Aunque este hecho aislado de tener puntuaciones altas con modelos ajenos, fuera común, existiría otro problema, ¿Cómo saber a priori que modelo de todos de los que se dispone es mejor para la planta objetivo?
 
-Teniendo en cuenta los datos y reflexiones anteriores no parece posible traspasar un modelo de una instalación a otra sin que esto tenga una repercusión negativa en la calidad de las predicciones del modelo.
+Teniendo en cuenta los datos y reflexiones anteriores no parece posible muy viable traspasar un modelo de una instalación a otra sin que esto tenga una repercusión negativa en la calidad de las predicciones del modelo.
 
 
 ## Diapositiva 17 (Resultados del modelo federado)
 
-No entraremos en detalles de la construcción del modelo federado por ser esta, análoga a la construcción de los modelos locales. Si que debemos tener en cuenta que las instalaciones que han participado en la federación (indicadas con un icono a su izquierda) han sido las plantas: "Piloto", "A" y "B". Veamos los resultados obtenidos.
+No entraremos en detalles de la construcción del modelo federado por ser esta, análoga a la construcción de los modelos locales. Si embargo, si que queremos destacar que las instalaciones que han participado en la federación (indicadas con un icono a su izquierda) han sido las plantas: "Piloto", "A" y "B". Analicemos ahora los resultados obtenidos.
 
 Vemos que, aunque las medidas de calidad de no son tan buenas como los del entrenamiento de forma local vemos que se mantienen en unos valores aceptables. Nuevamente debemos destacar los valores, bastante bajos de la precisión en el caso de la instalación N. Esto seguramente se deba a que:
 
@@ -346,12 +347,12 @@ Vemos que, aunque las medidas de calidad de no son tan buenas como los del entre
 
 Veamos ahora una comparación entre todos los modelos. Al igual que anteriormente se utilizará únicamente la medida f1-score por simplicidad.
 
-Como es lógico ambas alternativas presentan resultados peores al entrenamiento local que sería el caso digamos, ideal. Por otro lado, se puede ver que el método de aprendizaje federado es siempre mejor que el peor de los casos cuando se utiliza otra instalación, incluso en algunos casos supera a la mejor de las opciones. Hay que tener en cuenta que aunque en el mejor de los casos de usar el modelo de otra instalación supera al aprendizaje federado, nos encontramos con el problema adicional de encontrar, a priori, cual de todas las instalaciones disponibles será la más adecuada. Por lo tanto, parece claro que el uso del Federated Learning es de gran utilidad en situaciones como la descrita en este trabajo.
+Como es lógico ambas alternativas presentan resultados peores al entrenamiento local que sería el caso, digamos, ideal. Por otro lado, se puede ver que el método de aprendizaje federado es siempre mejor que el peor de los casos cuando se utiliza otra instalación, incluso en algunos casos supera a la mejor de las opciones. Hay que tener en cuenta que, aunque en el mejor de los casos de usar el modelo de otra instalación supera al aprendizaje federado, nos encontramos con el problema adicional de encontrar, a priori, cual de todas las instalaciones disponibles será la más adecuada. Por lo tanto, parece claro que el uso del Federated Learning es muy deseable en casos de uso como los descritos en este trabajo.
 
 
 ## Diapositiva 19 (Conclusiones)
 
-Recapitulando, el objetivo de proyecto era explorar el posible uso del Federated Learning para la detección de eventos anómalos dentro de un entorno industrial. Para ello se ha descrito un escenario que podría corresponderse con las necesidades de una compañía multinacional como podría ser una compañía siderúrgica, minera, un fabricante de productos químicos, etc. Se han expuesto las limitaciones existentes en cuanto a la distribución de datos entre las distintas instalaciones en el ámbito de una organización con una gran dispersión geográfica y se ha puesto de manifiesto la necesidad de una rápida implantación de modelos de Machine Learning en instalaciones de nueva creación.
+Recapitulando, el objetivo de proyecto era explorar el posible uso del Federated Learning para la detección de eventos anómalos dentro de un entorno industrial. Para ello se ha descrito un escenario que podría corresponderse con las necesidades de una compañía multinacional como podría ser una compañía siderúrgica, minera, un fabricante de productos químicos, etc. Se han expuesto las limitaciones existentes en cuanto a la distribución de datos entre instalaciones en el ámbito de una organización con una gran dispersión geográfica y se ha puesto de manifiesto la necesidad de una rápida implantación de modelos de Machine Learning en instalaciones de nueva creación.
 
 Para la solucionar el problema presentado se han comparado dos soluciones:
 
@@ -370,12 +371,12 @@ En cualquier caso el modelo federado ofrece siempre mejores resultados que la pe
 
 Otro problema que habría que considerar es la propiedad del modelo, una planta podría exigir a otra algún tipo de contrapartida por la cesión del modelo creado con sus datos. En el caso del Federated Learning todos los participantes son responsables en la creación del modelo por lo que nadie es propietario exclusivo de este.
 
-Teniendo en cuenta todos estos factores se ha demostrado que es una forma de construir  que puede ser aplicada en muchos ámbitos industriales en los que, el acceso a datos sea restringido  y en donde sea necesaria una rápida implantación de modelos.
+Teniendo en cuenta todos estos factores, se ha demostrado que el aprendizaje federado es una excelente forma de construir modelos que puede ser aplicada en muchos ámbitos industriales en los que, el acceso a datos sea restringido y en donde sea necesaria una rápida implantación y que además ofrece mejores resultados que otras alternativas.
 
 
 ## Diapositiva 20 (Trabajo futuro)
 
-El objetivo del trabajo es mostrar una metodología por lo que el alcance de los modelos aquí generados no se extiende más allá de su uso a nivel didáctico y su aplicación en entornos reales dependerá mucho del tipo de entorno y de las fuentes de datos disponibles. Si embargo, todo el procedimiento hasta llegar a su construcción puede resultar de gran interés en la resolución de problemas similares y justamente esto, el proceso, es lo que deberá considerarse como el producto final de este trabajo. Posibles líneas de trabajo futuro podrían ser la aplicación de los métodos aquí descritos en entornos industriales reales y no simulados.
+El objetivo del trabajo es mostrar una metodología por lo que el alcance de los modelos aquí generados no se extiende más allá de su uso a nivel didáctico y su aplicación en entornos reales dependerá mucho del tipo de entorno y de las fuentes de datos disponibles. Si embargo, todo el procedimiento hasta llegar a su construcción puede resultar de gran interés en la resolución de problemas similares y justamente esto, el proceso, es lo que deberá considerarse como el producto final de este trabajo. Posibles líneas de trabajo futuro podrían ser la aplicación de los métodos aquí descritos en entornos industriales reales con conjuntos de datos reales.
 
 
 ## Diapositiva 21 (Gracias)
