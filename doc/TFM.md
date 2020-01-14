@@ -315,45 +315,33 @@ Es importante destacar que:
 
 1. El modelo ha sido construido únicamente con el conjunto de datos denominado "Piloto"
 2. Del modelo aquí construido solo no interesa su estructura no sus parámetros ya que el proceso de entrenamiento se llevará a cabo para cada conjunto de datos de forma individual.
-3. De aquí en adelante todos los modelo tendrán la misma estructura.
+3. De aquí en adelante todos los modelos tendrán la misma estructura y serán entrenados de la misma forma (hiperparámetros).
 
 
 ## Diapositiva 15 (Resultados del modelo base)
 
-**TODO**
+Una vez que disponemos del modelo base, pasaremos a evaluar su rendimiento en los distintos conjuntos de datos de los que disponemos. Estos valores nos servirán como referencia a la hora de comparar las diferentes alternativas que se han propuesto como solución al problema.
 
-Ya disponemos de un modelo base construido a parater del conjunto de datos de la plnata pilito. Aplicaremos la estructura de este modelo en el resto de instalaciones (recoredad que esto no servira como cota máxima del rendimiento de las dos opciones  que barajamamos)  
-
-
-Los datos de la planta “Piloto” son los que se han utilizado en la construcción del modelo base y como se ha comentado anteriormente se han obtenido unos valores altos tanto para el recall como para la precision lo que se ve reflejado en el f1-score.
+Se puede observar que todas las plantas arrojan valores similares en cuanto a la precision el recall y la f1-score, en torno a un 90, 95 y 94 por ciento respectivamente. En las plantas "Piloto" y "A" se observa una diferencia bastante significativa entre el recall y la precision mientras que en las otras dos: la Planta B y la Planta N los valores están más cercanos. Cabe destacar que los resultados obtenidos en la Planta N son los peores de entre los cuatro conjuntos.
 
 
-
-Se puede observar que los resultados que arroja el modelo entrenado con los datos de la instalación “A” son prácticamente idénticos a los obtenidos en el entrenamiento de la planta “Piloto”. Es posible que si hubiéramos aumentado el número de epochs hubieran mejorado los resultados ya que si nos fijamos en la evolución de las curvas de coste, parece no haberse alcanzado el punto de estabilidad.
-
-
-En este entrenamiento se observa un ligero aumento de la precision en detrimento del recall. Vemos que ambos se compensan al ya que el f1-score se mantiene prácticamente igual que en los casos anteriores.
+## Diapositiva 16 (Intercambiabilidad del modelo base)
 
 
-De todos los casos este podría considerarse el peor de todos ya que el recall y la precision han disminuido de forma notable con respecto al resto de fábricas. Al igual que ocurría con la instalación “A”, los resultados probablemente hubieran mejorado al aumentar el número de epochs.
+En la sección anterior se ha visto que se  puede esperar del modelo base si es entrenado de manera local. En este diapositiva se pretende responder a la siguiente pregunta: ¿Funciona bien un modelo entrenado en una planta en otra sin necesidad de reentrenarlo? Para resolver esta duda presentamos a continuación una tabla comparativa del f1-score (media de todas las clases) sobre todas las posibles combinaciones train-test. La razón de elegir esta medida es por simplicidad, ya que con un único valor podemos hacernos una idea tanto de la precision como del recall.
 
-
-## Diapositiva 16 (Intercanbiabilidad del modelo base)
-
-
-En la sección anterior se ha visto que se  puede esperar del modelo base si se entrenase de manera local. En este apartado se pretende responder a la siguiente pregunta: ¿Funciona bien un modelo entrenado en una planta en otra sin necesidad de reentrenarlo? Para resolver esta duda presentaremos a continuación una tabla comparativa del f1-score (media de todas las clases) sobre todas las posibles combinaciones train-test. La razón de elegir esta medida es por simplicidad, ya que con un único valor podemos hacernos una idea tanto de la precision como del recall.
-
-
-Observando la tabla se puede ver que por norma general el modelo entrenado de forma específica (diagonal) supera ampliamente en rendimiento a los entrenados en otras instalaciones. Se debe destacar el caso de la instalación “N” en la que para algunos casos el score es mucho mejor que para su propio conjunto de entrenamiento. El motivo seguramente guarde relación con el hecho de que el número de epochs no fuera lo suficientemente alto. Aunque este hecho aislado fuera generalizado existiría otro problema, ¿cómo saber a priori que modelo de todos de los que se dispone es mejor para la planta objetivo?
+Observando la tabla podemos ver que por norma general el modelo entrenado de forma específica (diagonal) supera ampliamente en rendimiento a los entrenados en otras instalaciones. Es destacable el caso de la instalación “N” en la que para algunos casos el score es mucho mejor que para su propio conjunto de entrenamiento. El motivo seguramente guarde relación con el hecho de que el número de rondas de entrenamiento no fuera lo suficientemente alto. Aunque este hecho aislado de tener puntuaciones similares con modelos ajenos fuera generalizado existiría otro problema, ¿Cómo saber a priori que modelo de todos de los que se dispone es mejor para la planta objetivo?
 
 Teniendo en cuenta los datos y reflexiones anteriores no parece posible traspasar un modelo de una instalación a otra sin que esto tenga una repercusión negativa en la calidad de las predicciones del modelo.
 
 
 ## Diapositiva 17 (Resultados del modelo federado)
 
-Veamos los resultados obtenidos
+No entraremos en detalles de la construcción del modelo federado por ser esta, análoga a la construcción de los modelos locales. Si que debemos tener en cuenta que las instalaciones que han participado en la federación (indicadas con un icono a su izquierda) han sido las plantas: "Piloto", "A" y "B"
 
-Aunque los scores no son tan buenos como los del entrenamiento de forma local vemos que se mantienen en un rango aceptable.
+ y pasaremos a mostrar directamente los resultados obtenidos. Not
+
+Vemos que aunque las medidas de calidad de no son tan buenos como los del entrenamiento de forma local vemos que se mantienen en unos valores aceptables. Nuevamente debemos destacar los valores, bastante bajos de la precisión en el caso de la instalación N. Esto
 
 No encontramos ante una situación muy parecida al caso anterior los scores bajan pero aun así siguen estando en valores aceptables.
 
