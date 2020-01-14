@@ -2,7 +2,7 @@
 
 ## Diapositiva 1 (Introducción)
 
-Bienvenidos a la presentación del trabajo fin de master: "Detección de eventos anómalos en un entorno industrial mediante el uso de técnicas de Federated Learning" mi nombre es Darío Martín García Carretero. A lo largo de esta presentación se va mostrar una de las muchas aplicaciones del uso del aprendizaje federado. En este caso se utilizará como herramienta para la detección de eventos anómalos en un entorno industrial. Sin más preámbulos comencemos con la presentación.
+Bienvenidos a la presentación del trabajo fin de master: "Detección de eventos anómalos en un entorno industrial mediante el uso de técnicas de Federated Learning" mi nombre es Darío Martín García Carretero. A lo largo de esta presentación se va a mostrar una de las muchas aplicaciones del uso del aprendizaje federado. En este caso se utilizará como herramienta para la detección de eventos anómalos en un entorno industrial. Sin más preámbulos comencemos con la presentación.
 
 
 ## Diapositiva 2 (Contexto y justificación)
@@ -50,19 +50,20 @@ Hoy en día la mayoría de los componentes dentro de un entorno industrial está
 
 ### Bloque 2
 
-Como disponemos de esa gran cantidad de datos sobre el funcionamiento de la instalaciones (recordar que los datos solo se pueden usar a nivel interno, es decir, de manera local) es totalmente lógico tratar de resolver el problema mediante el uso de técnicas de Machine Learning.
+Como disponemos de esa gran cantidad de datos sobre el funcionamiento de las instalaciones (recordar que los datos solo se pueden usar a nivel interno, es decir, de manera local) es totalmente lógico tratar de resolver el problema mediante el uso de técnicas de Machine Learning.
 
 ### Bloque 3
 
-A pesar de poder aplicar técnicas de Machine Learning tradicional para resolver el problema a nivel local, es importante darse cuenta cuenta que es imprescindible tratar el problema a nivel global por el siguiente motivo, la necesidad de una implantación rápida del sistema de detección de fallos en las nuevas instalaciones. Abordando el problema de forma tradicional tendríamos únicamente dos alternativas:
+A pesar de poder aplicar técnicas de Machine Learning tradicional para resolver el problema a nivel local, es importante darse cuenta de que es imprescindible tratar el problema a nivel global por el siguiente motivo, la necesidad de una implantación rápida del sistema de detección de fallos en las nuevas instalaciones. Abordando el problema de forma tradicional tendríamos únicamente dos alternativas:
 
-* Repetir el proceso de la creación de modelos que se siguió en el resto de plantas. Esto podría llevar meses o incluso años, lo que va en contra del requerimiento de rápida implantación.
+* Repetir el proceso de la creación de modelos que se siguió en el resto de las plantas. Esto podría llevar meses o incluso años, lo que va en contra del requerimiento de rápida implantación.
 
 * Juntar los datos de todas las plantas en un único lugar y construir un modelo con todos los datos. El problema es que esta aproximación violaría el requerimiento de privacidad de los datos.
 
 Por estos motivos se propone el uso del Federated Learning que permite crear modelos de gran calidad y cumplir con las restricciones de privacidad y rápido despliegue.
 
-Hemos mencionado conceptos como Machine Learning, modelo, Federated Learnign pero no hemos explicado en que consisten. En las siguientes diapositivas realizaremos una breve introducción de estos conceptos.
+Hemos mencionado conceptos como Machine Learning, modelo, Federated Learning pero no hemos explicado en qué consisten. En las siguientes diapositivas realizaremos una breve introducción de estos conceptos.
+
 
 
 ## Diapositiva 5 (Machine Learning I)
@@ -78,7 +79,7 @@ Hemos mencionado conceptos como Machine Learning, modelo, Federated Learnign per
 
 ## Diapositiva 6 (Machine Learning II)
 
-Bien, ¿Y como funciona? Para explicarlo de una manera sencilla estableceremos una analogía entre nuestro cerebro y un modelo de Machine Learning mediante un simple ejemplo:
+Bien, ¿Y cómo funciona? Para explicarlo de una manera sencilla estableceremos una analogía entre nuestro cerebro y un modelo de Machine Learning mediante un simple ejemplo:
 
 ### Bloque 1
 
@@ -95,7 +96,7 @@ El aprendizaje automático funciona, en la mayoría de los casos, de forma anál
 
 ### Bloque 1
 
-Etapa 1, adquisición y preparación de los datos. Como ya se menciono, los modelos aprenden mediante el uso de ejemplos etiquetados. Es, en esta etapa, donde se obtienen estos ejemplos. Las fuentes pueden ser variadas y dependen del escenario en el que estemos trabajando. Por ejemplo, en nuestro caso, los datos provendrían de dispositivos ubicados en las factorías con el objetivo de monitorizar el comportamiento de las máquinas por un lado y, de los registros de mantenimiento de dichas máquinas por otro lado. Esta parte se correspondería con la parte de adquisición. En muchos casos, los datos capturados no están en un formato adecuado y tienen que ser procesados para darles la estructura adecuada para poder entrenar a los modelos. Esta sería la parte de que se encargaría la preparación de los datos.
+Etapa 1, adquisición y preparación de los datos. Como ya se mencionó, los modelos aprenden mediante el uso de ejemplos etiquetados. Es, en esta etapa, donde se obtienen estos ejemplos. Las fuentes pueden ser variadas y dependen del escenario en el que estemos trabajando. Por ejemplo, en nuestro caso, los datos provendrían de dispositivos ubicados en las factorías con el objetivo de monitorizar el comportamiento de las máquinas por un lado y, de los registros de mantenimiento de dichas máquinas por otro lado. Esta parte se correspondería con la parte de adquisición. En muchos casos, los datos capturados no están en un formato adecuado y tienen que ser procesados para darles la estructura adecuada para poder entrenar a los modelos. Esta sería la parte de que se encargaría la preparación de los datos.
 
 ### Bloque 2
 
@@ -130,16 +131,16 @@ Los nodos entrenan el modelo de forma local con sus propios datos.
 
 El servidor central solicita los modelos locales y a partir de ellos genera otro modelo si acceder a ningún dato.
 
-Una ciclo completo se denomina ronda. Todo este proceso se repetirá hasta que se cumpla la condición de parada establecida, que puede estar basada en un criterio de calidad o en un número máximo de iteraciones.
+Un ciclo completo se denomina ronda. Todo este proceso se repetirá hasta que se cumpla la condición de parada establecida, que puede estar basada en un criterio de calidad o en un número máximo de iteraciones.
 
 
 ## Diapositiva 9 (Diseño del experimento I)
 
-Para mostrar que la aplicación del Federated Learning es una solución que puede ofrece unos buenos resultados compararemos sus resultados con los dos alternativas:
+Para mostrar que la aplicación del Federated Learning es una solución que puede ofrecer unos buenos resultados compararemos sus resultados con las dos alternativas:
 
 * La primera sería que cada factoría pudiese construir su propio modelo local. Sabemos que esta alternativa no es viable pero nos dará una cota superior de la calidad de los modelos que es posible construir.
 
-* La segunda, basada en la intercambiabilidad de los modelos. Es decir, que un modelo entrenado en una planta pueda ser utilizado en otra sin falta de ser reentrenado. Notar que esta alternativa si que cumpliría con los requisitos establecidos de velocidad de implantación y privacidad.  
+* La segunda, basada en la intercambiabilidad de los modelos. Es decir, que un modelo entrenado en una planta pueda ser utilizado en otra sin falta de ser reentrenado. Notar que esta alternativa sí que cumpliría con los requisitos establecidos de velocidad de implantación y privacidad.  
 
 Para poner a prueba las tres alternativas ...
 
@@ -178,7 +179,7 @@ Una vez examinadas todos los resultados no será posible evaluar la idoneidad de
 
 ## Diapositiva 11 (Tecnologías)
 
-Para la implementación de todas las herramientas y  modelos desarrollados para este trabajo ha sido necesario el uso de multitud de tecnologías. Todas ellas tienen como nexo de unión el lenguaje de programación Python.
+Para la implementación de todas las herramientas y  modelos desarrollados para este trabajo ha sido necesario el uso de multitud de tecnologías. Todas ellas tienen como nexo el lenguaje de programación Python.
 
 ### Bloque 1
 
@@ -205,7 +206,7 @@ Matplotlib, esta potente librería también para el lenguaje de programación Py
 
 ### Bloque 5
 
-scikit-learn, es una librería especializada para el uso de Machine Learning para Python. Contiene multitud de implementaciones de diferentes tipos de modelos. Aunque no ha sido la librería que se ha utilizado para la creación de los modelos, si que se han utilizado para la evaluación de los modelos construidos con ...
+scikit-learn, es una librería especializada para el uso de Machine Learning para Python. Contiene multitud de implementaciones de diferentes tipos de modelos. Aunque no ha sido la librería que se ha utilizado para la creación de los modelos, sí que se han utilizado para la evaluación de los modelos construidos con ...
 
 ### Bloque 6
 
@@ -222,7 +223,7 @@ Para el entrenamiento de los modelos necesitamos datos. Sin embargo, es práctic
 
 ### Bloque 1
 
-Por cuestiones fáciles de entender no nos es posible construir un software que simule cada una de las diferentes máquinas que pudieran existir en un entorno industrial. Por lo tanto, en este trabajo, vamos considerar únicamente un tipo de máquina: máquinas rotatorias de uso genérico.
+Por cuestiones fáciles de entender no nos es posible construir un software que simule cada una de las diferentes máquinas que pudieran existir en un entorno industrial. Por lo tanto, en este trabajo, vamos a considerar únicamente un tipo de máquina: máquinas rotatorias de uso genérico.
 
 ### Bloque 2
 
@@ -236,14 +237,14 @@ Además, también se almacenarán datos sobre las condiciones climáticas. En nu
 
 ### Bloque 3
 
-También se simulara el desgaste propio del uso de las máquinas. Eso implica que, una vez lleguen al final de su vida útil, estas se estropearán. Cuando una máquina se estropee se almacenará un registro en un diario de mantenimiento tanto de cuando se produjo la avería como de cuando se realizó la reparación. Nuestras máquinas podrán fallar por dos motivos y el modelo se construirá para ser capaz de detectar el tipo de fallo.
+También se simulará el desgaste propio del uso de las máquinas. Eso implica que, una vez lleguen al final de su vida útil, estas se estropearán. Cuando una máquina se estropee se almacenará un registro en un diario de mantenimiento tanto de cuando se produjo la avería como de cuando se realizó la reparación. Nuestras máquinas podrán fallar por dos motivos y el modelo se construirá para ser capaz de detectar el tipo de fallo.
 
 
 ## Diapositiva 13 (Medidas de calidad para los modelos)
 
-Antes de explicar como se ha construido el modelo es importante hacer un pequeño inciso para hablar sobre las medidas de calidad de los modelos.
+Antes de explicar cómo se ha construido el modelo es importante hacer un pequeño inciso para hablar sobre las medidas de calidad de los modelos.
 
-Es muy importante seleccionar la medida de evaluación del modelo correcta para cada tipo de problema. Por ejemplo, un clásico error es considerar la medida "accuracy" (número de casos correctamente clasificados entre número total de casos) para problemas desbalanceados donde, un numero cercano al 1 (valor máximo) no indica en ningún caso que el modelo sea bueno ya que un modelo degenerado, cuya salida sea siempre la clase mayoritaria ofrecerá valores altos para esta medida lo cual no significará en ningún caso que este sea un
+Es muy importante seleccionar la medida de evaluación adecuada para cada tipo de problema. Por ejemplo, un clásico error es considerar la medida "accuracy" (número de casos correctamente clasificados entre número total de casos) para problemas desbalanceados donde, un numero cercano al 1 (valor máximo) no indica en ningún caso que el modelo sea bueno ya que un modelo degenerado, cuya salida sea siempre la clase mayoritaria ofrecerá valores altos para esta medida lo cual no significará en ningún caso que este sea un
 buen modelo.
 
 Aunque existen muchas más en esta presentación hablaremos únicamente de las medidas que usaremos de aquí en adelante.
@@ -262,7 +263,7 @@ La maximización de esta medida es equivalente a la maximización de la segurida
 
 ### Bloque 3
 
-Aunque obviamente la seguridad siempre debe ser lo primero, es necesario establecer un compromiso entre las dos medidas. Para evaluar este compromiso se utilizar la medida f1-score que consiste en la media armónica de los dos medidas anteriores.
+Aunque obviamente la seguridad siempre debe ser lo primero, es necesario establecer un compromiso entre las dos medidas. Para evaluar este compromiso se utilizar la medida f1-score que consiste en la media armónica de las dos medidas anteriores.
 
 
 ## Diapositiva 14 (Construcción del Modelo Base)
@@ -285,7 +286,7 @@ Las transmisiones de telemetría sin procesar, si bien pueden ser muy útiles pa
 
 __Etiquetado__
 
-Gracias a los datos de mantenimiento podemos saber cuando una máquina ha fallado, por lo tanto, podemos   etiquetar el registro telemétrico en ese instante como un fallo (la etiqueta dependerá del tipo de fallo recordemos que podían ocurrir dos tipos de fallo). Como es interesante detectar el fallo antes de que se produzca, para tareas de mantenimiento preventivo, por ejemplo, se etiquetaran también como fallos los N  registros anteriores al fallo real (nosotros usaremos N = 7)
+Gracias a los datos de mantenimiento podemos saber cuándo una máquina ha fallado, por lo tanto, podemos etiquetar el registro telemétrico en ese instante como un fallo (la etiqueta dependerá del tipo de fallo recordemos que podían ocurrir dos tipos de fallo). Como es interesante detectar el fallo antes de que se produzca, para tareas de mantenimiento preventivo, por ejemplo, se etiquetaran también como fallos los N  registros anteriores al fallo real (nosotros usaremos N = 7)
 
 __Enriquecimiento__
 
@@ -327,7 +328,7 @@ Se puede observar que todas las plantas arrojan valores similares en cuanto a la
 
 ## Diapositiva 16 (Intercambiabilidad del modelo base)
 
-En la sección anterior se ha visto que se  puede esperar del modelo base si es entrenado de manera local. En este diapositiva se pretende responder a la siguiente pregunta: ¿Funciona bien un modelo entrenado en una planta en otra sin necesidad de reentrenarlo? Para resolver esta duda presentamos a continuación una tabla comparativa del f1-score (media de todas las clases) sobre todas las posibles combinaciones train-test. La razón de elegir esta medida es por simplicidad, ya que con un único valor podemos hacernos una idea tanto de la precision como del recall.
+En la sección anterior se ha visto que se  puede esperar del modelo base si es entrenado de manera local. En esta diapositiva se pretende responder a la siguiente pregunta: ¿Funciona bien un modelo entrenado en una planta en otra sin necesidad de reentrenarlo? Para resolver esta duda presentamos a continuación una tabla comparativa del f1-score (media de todas las clases) sobre todas las posibles combinaciones train-test. La razón de elegir esta medida es por simplicidad, ya que con un único valor podemos hacernos una idea tanto de la precision como del recall.
 
 Observando la tabla podemos ver que por norma general el modelo entrenado de forma específica (diagonal) supera ampliamente en rendimiento a los entrenados en otras instalaciones. Es destacable el caso de la instalación “N” en la que para algunos casos el score es mucho mejor que para su propio conjunto de entrenamiento. El motivo seguramente guarde relación con el hecho de que el número de rondas de entrenamiento no fuera lo suficientemente alto. Aunque este hecho aislado de tener puntuaciones similares con modelos ajenos fuera generalizado existiría otro problema, ¿Cómo saber a priori que modelo de todos de los que se dispone es mejor para la planta objetivo?
 
@@ -372,7 +373,7 @@ En cualquier caso el modelo federado ofrece siempre mejores resultados que la pe
 
 Otro problema que habría que considerar es la propiedad del modelo, una planta podría exigir a otra algún tipo de contrapartida por la cesión del modelo creado con sus datos. En el caso del Federated Learning todos los participantes son responsables en la creación del modelo por lo que nadie es propietario exclusivo de este.
 
-Teniendo en cuenta todos estos factores se ha demostrado que es una forma de construir  que puede ser aplicada en mucho ámbitos industriales en los que, el acceso a datos sea restringido  y en donde sea necesaria una rápida implantación de modelos.
+Teniendo en cuenta todos estos factores se ha demostrado que es una forma de construir  que puede ser aplicada en muchos ámbitos industriales en los que, el acceso a datos sea restringido  y en donde sea necesaria una rápida implantación de modelos.
 
 
 ## Diapositiva 20 (Trabajo futuro)
