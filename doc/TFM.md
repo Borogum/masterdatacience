@@ -7,8 +7,6 @@ Bienvenidos a la presentación del trabajo fin de master: "Detección de eventos
 
 ## Diapositiva 2 (Contexto y justificación)
 
-Empecemos situando el contexto y justificando la necesidad del trabajo.
-
 ### Bloque 1
 
 ¿Qué entendemos por un evento anómalo?
@@ -21,21 +19,21 @@ En un entorno industrial, los eventos anómalos también pueden ser de muy diver
 
 ## Bloque 3
 
-Hay que tener en cuenta que estos fallos pueden provocar grandes daños económicos y personales. Por lo que su detección es algo muy importante que puede ayudar a prevenir situaciones irreversibles.
+Hay que tener en cuenta que estos fallos pueden provocar grandes daños económicos y personales. Por lo que su detección es crucial y puede ayudar a prevenir situaciones irreversibles.
 
 ## Diapositiva 3 (Escenario I)
 
-Una vez explicado el contexto y la justificación pasemos ahora a exponer un caso concreto de aplicación.
+Pasemos ahora a exponer un caso concreto de posible aplicación del Federated Learning. Este caso de uso será en el que se basará el resto del trabajo.
 
 Supongamos que una empresa desea implantar un sistema que detecte las posibles averías de las máquinas de sus factorías antes de que estas fallen y puedan provocar daños tanto al personal como a las propias instalaciones.
 
 ### Bloque 1
 
-Esta empresa dispone de plantas repartidas por todo el mundo. A pesar de pertenecer a la misma compañía cada una de las instalaciones tiene sus propias particularidades en cuanto al tipo de productos que fabrican, la manera de fabricarlos, etc. A estas diferencias se han de añadir también las condiciones ambientales de cada lugar: temperatura, humedad, presión atmosférica, etc. A pesar de estas diferencias, las máquinas utilizadas en todas las factorías son similares.
+Sabemos que empresa dispone de plantas repartidas por todo el mundo. A pesar de pertenecer a la misma compañía cada una de las instalaciones tiene sus propias particularidades en cuanto al tipo de productos que fabrican, la manera de fabricarlos, etc. A estas diferencias se han de añadir también las condiciones ambientales de cada lugar: temperatura, humedad, presión atmosférica, etc. A pesar de estas diferencias, las máquinas utilizadas en todas las factorías son similares.
 
 ## Bloque 2
 
-Las plantas trabajan con un alto grado de independencia y de hecho, suelen competir entre ellas en cuestiones como la cantidad de producción, calidad, etc. Debido a esta competitividad, las factorías son reacias a compartir datos sobre sus técnicas de producción, las configuraciones de sus máquinas, etc. Esto implica que el acceso a sus datos está muy restringido y que estos únicamente pueden ser utilizados a nivel interno.
+Las plantas trabajan con un alto grado de independencia y de hecho, suelen competir entre ellas en cuestiones como: la cantidad de producción, calidad, etc. Debido a esta competitividad, las factorías son reacias a compartir datos sobre sus técnicas de producción, las configuraciones de sus máquinas, etc. Esto implica que el acceso a sus datos está muy restringido y que estos únicamente pueden ser utilizados a nivel interno.
 
 ## Bloque 3
 
@@ -46,24 +44,23 @@ La compañía está en constante expansión y es habitual que abra nuevas planta
 
 ### Bloque 1
 
-Hoy en día la mayoría de los componentes dentro de un entorno industrial están monitorizados mediante el uso de dispositivos de medición especializados esta empresa no es una excepción y por lo tanto, podemos disponer de una gran cantidad de datos de los sensores ubicados en las factorías.
+Hoy en día la mayoría de los componentes dentro de un entorno industrial están monitorizados mediante el uso de dispositivos de medición especializados y esta empresa no es una excepción y por lo tanto, es posible disponer de una gran cantidad de datos de los sensores ubicados en las factorías.
 
 ### Bloque 2
 
-Como disponemos de esa gran cantidad de datos sobre el funcionamiento de las instalaciones (recordar que los datos solo se pueden usar a nivel interno, es decir, de manera local) es totalmente lógico tratar de resolver el problema mediante el uso de técnicas de Machine Learning.
+Como se dispone de esa gran cantidad de datos sobre el funcionamiento de las instalaciones (hay que recordar que los datos solo se pueden usar a nivel interno, es decir, de manera local) es totalmente lógico tratar de resolver el problema mediante el uso de técnicas de Machine Learning.
 
 ### Bloque 3
 
-A pesar de poder aplicar técnicas de Machine Learning tradicional para resolver el problema a nivel local, es importante darse cuenta de que es imprescindible tratar el problema a nivel global por el siguiente motivo, la necesidad de una implantación rápida del sistema de detección de fallos en las nuevas instalaciones. Abordando el problema de forma tradicional tendríamos únicamente dos alternativas:
+A pesar de poder aplicar técnicas de Machine Learning tradicional para resolver el problema a nivel local, es importante darse cuenta de que es imprescindible tratar el problema a nivel global por el siguiente motivo, la necesidad de una implantación rápida del sistema en las instalaciones de nueva creación. Si abordásemos el problema de forma tradicional tendríamos dos alternativas:
 
-* Repetir el proceso de la creación de modelos que se siguió en el resto de las plantas. Esto podría llevar meses o incluso años, lo que va en contra del requerimiento de rápida implantación.
+* Repetir el proceso de la creación de modelos que se siguió en el resto de las plantas. Esto podría llevar meses o incluso años, lo que iría en contra del requerimiento de rápida implantación.
 
-* Juntar los datos de todas las plantas en un único lugar y construir un modelo con todos los datos. El problema es que esta aproximación violaría el requerimiento de privacidad de los datos.
+* Juntar los datos de todas las plantas en un único lugar y construir un modelo con todos los datos. Esto proporcionaría un modelo más robusto capaz de adaptarse a las condiciones de las nuevas instalaciones. El problema es que esta aproximación violaría el requerimiento de privacidad de los datos.
 
-Por estos motivos se propone el uso del Federated Learning que permite crear modelos de gran calidad y cumplir con las restricciones de privacidad y rápido despliegue.
+Por estos motivos se propone el uso del Federated Learning que permite crear modelos de gran calidad y a la vez cumplir con las restricciones de privacidad y rápido despliegue.
 
-Hemos mencionado conceptos como Machine Learning, modelo, Federated Learning pero no hemos explicado en qué consisten. En las siguientes diapositivas realizaremos una breve introducción de estos conceptos.
-
+Hemos mencionado conceptos como Machine Learning, Federated Learning pero no hemos explicado en qué consisten. En las siguientes diapositivas realizaremos una breve introducción de estos conceptos.
 
 
 ## Diapositiva 5 (Machine Learning I)
@@ -74,7 +71,7 @@ Hemos mencionado conceptos como Machine Learning, modelo, Federated Learning per
 
 ### Bloque 2
 
-¿Qué puede hacer por nosotros?, ¿Qué aplicaciones tiene? Hoy en día el Machine Learning tiene una gran variedad de aplicaciones, entre las que se incluyen: motores de búsqueda, diagnóstico médico, detección de fraude en el uso de tarjetas de crédito, clasificación de secuencias de ADN, videojuegos, etc.
+¿Qué puede hacer el Machine Learning por nosotros?, ¿Qué aplicaciones tiene? Hoy en día el Machine Learning tiene una gran variedad de aplicaciones, entre las que se incluyen: motores de búsqueda, diagnóstico médico, detección de fraude en el uso de tarjetas de crédito, clasificación de secuencias de ADN, videojuegos, etc.
 
 
 ## Diapositiva 6 (Machine Learning II)
@@ -96,7 +93,7 @@ El aprendizaje automático funciona, en la mayoría de los casos, de forma anál
 
 ### Bloque 1
 
-Etapa 1, adquisición y preparación de los datos. Como ya se mencionó, los modelos aprenden mediante el uso de ejemplos etiquetados. Es, en esta etapa, donde se obtienen estos ejemplos. Las fuentes pueden ser variadas y dependen del escenario en el que estemos trabajando. Por ejemplo, en nuestro caso, los datos provendrían de dispositivos ubicados en las factorías con el objetivo de monitorizar el comportamiento de las máquinas por un lado y, de los registros de mantenimiento de dichas máquinas por otro lado. Esta parte se correspondería con la parte de adquisición. En muchos casos, los datos capturados no están en un formato adecuado y tienen que ser procesados para darles la estructura adecuada para poder entrenar a los modelos. Esta sería la parte de que se encargaría la preparación de los datos.
+Etapa 1, adquisición y preparación de los datos. Como ya se mencionó, los modelos "aprenden" mediante el uso de ejemplos etiquetados. Es, en esta etapa, donde se obtienen estos ejemplos. Las fuentes pueden ser variadas y dependen del escenario en el que estemos trabajando. Por ejemplo, en nuestro caso, los datos provendrían de dispositivos de medición ubicados en las factorías y de los registros de mantenimiento de las máquinas. Esta es la parte de la adquisición. Es muy frecuente que los datos capturados no estén en un formato adecuado y deben ser procesados para darles la estructura necesaria para poder entrenar a los modelos esta tarea es vital y se denomina: preparación de los datos.
 
 ### Bloque 2
 
@@ -104,7 +101,7 @@ Etapa 2, entrenamiento del modelo. Esta es la etapa donde el modelo "aprende" gr
 
 ### Bloque 3
 
-Etapa 3, validación del modelo. Esta es la etapa donde se "examina" el modelo construido. Es decir, donde se valora si ha aprendido lo suficiente. Aunque existen multitud de técnicas, la forma más habitual es la de suministrarle al modelo un conjunto de datos que no hayan sido utilizados en el entrenamiento y ver que sus resultados en función de una o varias métricas.
+Etapa 3, validación del modelo. Esta es la etapa donde se "examina" el modelo construido. Es decir, donde se valora si ha aprendido lo suficiente. Aunque existen multitud de técnicas, la forma más habitual es la de suministrarle al modelo un conjunto de datos que no hayan sido utilizados en el entrenamiento y evaluar sus resultados en función de una o varias métricas.
 
 ### Bloque 4
 
@@ -113,23 +110,23 @@ Es importante destacar que, aunque estas fases se han presentado de manera secue
 
 ## Diapositiva 8 (Federated Learning)
 
-Veamos ahora en que consiste el Federated Learning (aprendizaje federado en español). El aprendizaje federado es una técnica de aprendizaje automático que entrena un algoritmo a través de múltiples dispositivos o servidores sin intercambiar datos entre ellos. Este proceso se divide en 4 fases:
+Veamos ahora en que consiste el Federated Learning (aprendizaje federado en español). El aprendizaje federado es una técnica de aprendizaje automático que entrena un algoritmo a través de múltiples dispositivos o servidores, denominados nodos sin intercambiar datos entre ellos. El proceso de entrenamiento se divide en 4 fases:
 
 ### Bloque 1
 
-El servidor central elige el tipo de modelo a entrenar, en principio podrías ser cualquier tipo de modelo basado en la optimización de parámetros, en nuestro caso se usará una red neuronal.
+Primera, el servidor central elige el tipo de modelo a entrenar. En principio podría ser cualquier tipo de modelo basado en la optimización de parámetros, en nuestro caso (¡aviso de spoiler!) se usará una red neuronal.
 
 ### Bloque 2
 
-El servidor central transmite el modelo al resto de participantes (nodos).
+Segunda, el servidor central transmite el modelo al resto de participantes.
 
 ### Bloque 3
 
-Los nodos entrenan el modelo de forma local con sus propios datos.
+Tercera, los nodos entrenan el modelo de forma local con sus propios datos.
 
 ### Bloque 4
 
-El servidor central solicita los modelos locales y a partir de ellos genera otro modelo si acceder a ningún dato.
+Y cuarta, el servidor central solicita los modelos locales y a partir de ellos genera otro modelo si acceder a ningún dato.
 
 Un ciclo completo se denomina ronda. Todo este proceso se repetirá hasta que se cumpla la condición de parada establecida, que puede estar basada en un criterio de calidad o en un número máximo de iteraciones.
 
