@@ -327,7 +327,6 @@ Se puede observar que todas las plantas arrojan valores similares en cuanto a la
 
 ## Diapositiva 16 (Intercambiabilidad del modelo base)
 
-
 En la sección anterior se ha visto que se  puede esperar del modelo base si es entrenado de manera local. En este diapositiva se pretende responder a la siguiente pregunta: ¿Funciona bien un modelo entrenado en una planta en otra sin necesidad de reentrenarlo? Para resolver esta duda presentamos a continuación una tabla comparativa del f1-score (media de todas las clases) sobre todas las posibles combinaciones train-test. La razón de elegir esta medida es por simplicidad, ya que con un único valor podemos hacernos una idea tanto de la precision como del recall.
 
 Observando la tabla podemos ver que por norma general el modelo entrenado de forma específica (diagonal) supera ampliamente en rendimiento a los entrenados en otras instalaciones. Es destacable el caso de la instalación “N” en la que para algunos casos el score es mucho mejor que para su propio conjunto de entrenamiento. El motivo seguramente guarde relación con el hecho de que el número de rondas de entrenamiento no fuera lo suficientemente alto. Aunque este hecho aislado de tener puntuaciones similares con modelos ajenos fuera generalizado existiría otro problema, ¿Cómo saber a priori que modelo de todos de los que se dispone es mejor para la planta objetivo?
@@ -337,48 +336,48 @@ Teniendo en cuenta los datos y reflexiones anteriores no parece posible traspasa
 
 ## Diapositiva 17 (Resultados del modelo federado)
 
-No entraremos en detalles de la construcción del modelo federado por ser esta, análoga a la construcción de los modelos locales. Si que debemos tener en cuenta que las instalaciones que han participado en la federación (indicadas con un icono a su izquierda) han sido las plantas: "Piloto", "A" y "B"
+No entraremos en detalles de la construcción del modelo federado por ser esta, análoga a la construcción de los modelos locales. Si que debemos tener en cuenta que las instalaciones que han participado en la federación (indicadas con un icono a su izquierda) han sido las plantas: "Piloto", "A" y "B". Veamos los resultados obtenidos.
 
- y pasaremos a mostrar directamente los resultados obtenidos. Not
+Vemos que, aunque las medidas de calidad de no son tan buenas como los del entrenamiento de forma local vemos que se mantienen en unos valores aceptables. Nuevamente debemos destacar los valores, bastante bajos de la precisión en el caso de la instalación N. Esto seguramente se deba a que:
 
-Vemos que aunque las medidas de calidad de no son tan buenos como los del entrenamiento de forma local vemos que se mantienen en unos valores aceptables. Nuevamente debemos destacar los valores, bastante bajos de la precisión en el caso de la instalación N. Esto
+1. En el modelo base de esa instalación ya presentaba valores más bajos que en resto de las instalaciones.
+2. Que el modelo no ha participado en la federación a la hora de ser entrenado.
 
-No encontramos ante una situación muy parecida al caso anterior los scores bajan pero aun así siguen estando en valores aceptables.
-
-En el caso de esta instalación los valores de recall que en el entrenamiento local ya eran relativamente bajos bajan aún más siendo sin duda los peores valores de todas las instalaciones.
-
-
-Es importante notar que esta instalación no participo en la fase de entrenamiento y eso explicaría los valores tan bajos de f1-score y que la curva de la función de coste del conjunto test esté por encima de la del entrenamiento. Aun así son valores bastante buenos.
 
 ## Diapositiva 18 (Comparación entre aproximaciones)
 
-Como se lógico ambas alternativas presentan resultados peores al entrenamiento local que sería el caso ideal. Por otro lado, se puede ver que el método de aprendizaje federado es siempre mejor que el peor de los casos cuando se utiliza otra instalación, incluso en algunos casos supera a la mejor de las opciones. Hay que tener en cuenta que aunque en el mejor de los casos de usar el modelo de otra instalación supera al aprendizaje federado, nos encontramos con el problema adicional de encontrar, a priori, cual de todas las instalaciones disponibles será la más adecuada.  Por lo tanto, parece claro que el uso del Federated Learning es de gran utilidad en situaciones como la descrita en este trabajo.
+Veamos ahora una comparación entre todos los modelos. Al igual que anteriormente se utilizará únicamente la medida f1-score por simplicidad.
+
+Como es lógico ambas alternativas presentan resultados peores al entrenamiento local que sería el caso digamos, ideal. Por otro lado, se puede ver que el método de aprendizaje federado es siempre mejor que el peor de los casos cuando se utiliza otra instalación, incluso en algunos casos supera a la mejor de las opciones. Hay que tener en cuenta que aunque en el mejor de los casos de usar el modelo de otra instalación supera al aprendizaje federado, nos encontramos con el problema adicional de encontrar, a priori, cual de todas las instalaciones disponibles será la más adecuada. Por lo tanto, parece claro que el uso del Federated Learning es de gran utilidad en situaciones como la descrita en este trabajo.
 
 
 ## Diapositiva 19 (Conclusiones)
 
-
-Hay que recordar que el objetivo de proyecto es explorar el posible uso del Federated Learning para la detección de eventos anómalos dentro de un entorno industrial. Para ello se ha descrito un escenario (o caso de uso) que podría corresponderse con las necesidades de una compañía multinacional como podría ser una compañía siderúrgica, minera, un fabricante de productos químicos, etc. En este caso de uso se han expuesto las limitaciones existentes en cuanto a la distribución de datos entre las distintas instalaciones en el ámbito de una organización con una gran dispersión geográfica y se ha puesto de manifiesto la necesidad de una rápida implantación de modelos de Machine Learning en instalaciones de nueva creación.
+Recapitulando, el objetivo de proyecto era explorar el posible uso del Federated Learning para la detección de eventos anómalos dentro de un entorno industrial. Para ello se ha descrito un escenario que podría corresponderse con las necesidades de una compañía multinacional como podría ser una compañía siderúrgica, minera, un fabricante de productos químicos, etc. Se han expuesto las limitaciones existentes en cuanto a la distribución de datos entre las distintas instalaciones en el ámbito de una organización con una gran dispersión geográfica y se ha puesto de manifiesto la necesidad de una rápida implantación de modelos de Machine Learning en instalaciones de nueva creación.
 
 Para la solucionar el problema presentado se han comparado dos soluciones:
 
 -	Una basada en la intercambiabilidad de modelos
 -	Una basada en el uso del Federated Learning
 
-Se ha mostrado que el método basado en la intercambiabilidad entre modelos puede resultar de utilidad pero añade complejidad al problema. Es necesario crear un método para decidir la planta de origen del modelo ya que como se ha visto, no todos los modelos ofrecen los mismos resultados. Otro problema que habría que añadir a esta alternativa es la propiedad del modelo, una planta podría exigir a otra algún tipo de contrapartida por la cesión del modelo creado con sus datos.
+### Bloque 1
 
-El método basado en Federated Learning ha demostrado ser más eficaz por dos motivos:
+Se ha mostrado que el método basado en la intercambiabilidad entre modelos y el basado en aprendizaje federado ofrecen resultados similares (considerando siempre el mejor de los casos) pero añade complejidad al problema. Es necesario crear un método para decidir la planta de origen del modelo ya que como se ha visto, no todos los modelos ofrecen los mismos resultados.
 
--	Ofrece resultados similares a la solución óptima basada en el intercambio de modelos y siempre resultados mejores que la peor de las soluciones de intercambiabilidad.
+### Bloque 2
 
--	Todos los participantes son responsables en la creación del modelo por lo que nadie es propietario exclusivo de este.
+En cualquier caso el modelo federado ofrece siempre mejores resultados que la peor de las soluciones de intercambiabilidad.
+
+### Bloque 3
+
+Otro problema que habría que considerar es la propiedad del modelo, una planta podría exigir a otra algún tipo de contrapartida por la cesión del modelo creado con sus datos. En el caso del Federated Learning todos los participantes son responsables en la creación del modelo por lo que nadie es propietario exclusivo de este.
+
+Teniendo en cuenta todos estos factores se ha demostrado que es una forma de construir  que puede ser aplicada en mucho ámbitos industriales en los que, el acceso a datos sea restringido  y en donde sea necesaria una rápida implantación de modelos.
 
 
 ## Diapositiva 20 (Trabajo futuro)
 
-Como ya se ha mencionado el objetivo del trabajo es mostrar una metodología por lo que el objetivo de los modelos aquí generados no se extiende más allá de su uso a nivel didáctico y su aplicación en entornos reales dependerá mucho del tipo de entorno y de las fuentes de datos disponibles. Si embargo, todo el procedimiento hasta llegar a su construcción puede resultar de gran interés en la resolución de problemas similares y justamente esto, el proceso, es lo que deberá considerarse como el producto final de este trabajo.
-
-Debido a las particularidades de cada tipo de instalación puede ser complicado que los modelos construidos aquí puedan aplicarse directamente en entornos del mundo real. Posibles líneas de trabajo futuro podrían ser la aplicación de los métodos aquí descritos en entornos industriales reales y no simulados.
+El objetivo del trabajo es mostrar una metodología por lo que el alcance de los modelos aquí generados no se extiende más allá de su uso a nivel didáctico y su aplicación en entornos reales dependerá mucho del tipo de entorno y de las fuentes de datos disponibles. Si embargo, todo el procedimiento hasta llegar a su construcción puede resultar de gran interés en la resolución de problemas similares y justamente esto, el proceso, es lo que deberá considerarse como el producto final de este trabajo. Posibles líneas de trabajo futuro podrían ser la aplicación de los métodos aquí descritos en entornos industriales reales y no simulados.
 
 
 ## Diapositiva 21 (Gracias)
