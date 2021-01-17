@@ -9,7 +9,7 @@ Hoy en día la mayoría de los componentes dentro de un entorno industrial está
 Por diversas razones a las compañías rehúsan compartir sus datos. Por este motivo en este trabajo se propone el uso del Federated Learning (FL). Gracias a el FL se pueden construir modelos aprovechando toda la información disponible manteniendo la privacidad de los datos.
 
 
-# Código fuente TFM
+# Código fuente
 
 El código fuente esta divido en cinco partes:
 
