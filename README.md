@@ -1,3 +1,14 @@
+# Detección de eventos anómalos en un entorno industrial mediante el uso de técnicas de Federated Learning.
+
+Un evento anómalo es aquel que se produce de forma repentina y sin previsión. En un entorno industrial, estos eventos, generalmente fallos en las máquinas, pueden provocar grandes daños económicos y personales por lo que su detección puede ayudar a prevenir situaciones irreversibles.
+
+El objetivo de este proyecto es mostrar como detectar anomalías en equipos industriales mediante el uso de un modelo de aprendizaje automático. Para enseñar a distinguir a un modelo entre un comportamiento normal y otro anormal se necesitan datos, contra más datos, mejor.
+
+Hoy en día la mayoría de los componentes dentro de un entorno industrial están monitorizados mediante el uso de dispositivos de medición especializados. Siempre podemos disponer de los datos suministrados por nuestros dispositivos de medición para entrenar al modelo, pero ¿y si pudiéramos disponer de más datos? Muchos equipos industriales son de uso genérico y pueden ser usados para muchas tareas y en muchos tipos de instalación. Si pudiéramos tener acceso a los datos de todos esos dispositivos podríamos crear un modelo mucho más robusto.
+
+Por diversas razones a las compañías rehúsan compartir sus datos. Por este motivo en este trabajo se propone el uso del Federated Learning (FL). Gracias a el FL se pueden construir modelos aprovechando toda la información disponible manteniendo la privacidad de los datos.
+
+
 # Código fuente TFM
 
 El código fuente esta divido en cinco partes:
